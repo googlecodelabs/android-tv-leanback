@@ -12,5 +12,6 @@
     <string name="title_activity_player">PlayerActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="columns">1</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
