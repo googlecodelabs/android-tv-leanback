@@ -21,12 +21,11 @@
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:tint="@color/photo_tint"
-            android:src="@drawable/avatar_movie_poster"
             android:layout_centerInParent="true"
 
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -39,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_alignParentBottom="true"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
             />
            <RatingBar
                android:layout_width="wrap_content"
@@ -49,6 +48,7 @@
                android:max="5"
                android:rating="0"
                android:isIndicator="true"
+               android:layout_below="@id/info_text"
                />
 
             <Button
@@ -56,9 +56,12 @@
                 android:layout_height="wrap_content"
                 android:text="Info"
                 android:id="@+id/play_button"
-                android:background="@color/accent"
+                android:background="@color/primary"
+                android:textColor="@android:color/white"
+                android:layout_alignParentBottom="true"
+
                 />
-        </LinearLayout>
+        </RelativeLayout>
         </LinearLayout>
 
     </RelativeLayout>

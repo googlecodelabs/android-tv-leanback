@@ -6,7 +6,7 @@ public class VideoItemContract {
     public static final String CONTENT_AUTHORITY = "com.android.example.leanback";
     public static final Uri BASE_URI = Uri.parse("content://com.android.example.leanback");
 
-    interface VideoItemColumns {
+    public interface VideoItemColumns {
         /**
          * Type: INTEGER PRIMARY KEY AUTOINCREMENT
          */
