@@ -1,1 +1,1 @@
-include ':checkpoint_0', ':checkpoint_1', ':checkpoint_2', ':checkpoint_3', ':checkpoint_4'
+include ':checkpoint_0', ':checkpoint_1', ':checkpoint_2', ':checkpoint_3', ':checkpoint_4', ':checkpoint_5'
