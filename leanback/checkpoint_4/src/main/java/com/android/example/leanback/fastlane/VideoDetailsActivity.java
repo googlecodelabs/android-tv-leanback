@@ -8,13 +8,17 @@ import com.android.example.leanback.R;
 /**
  * Created by anirudhd on 11/2/14.
  */
-public class LeanbackActivity extends Activity {
+public class VideoDetailsActivity extends Activity {
 
-    public  static final String VIDEO = "video";
 
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leanback);
+        setContentView(R.layout.activity_leanback_details);
+
     }
+
 }

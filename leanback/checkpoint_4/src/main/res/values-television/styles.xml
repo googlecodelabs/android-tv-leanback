@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.Leanback">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="imageCardViewStyle">@style/MyImageCardViewStyle</item>
+        <item name="headerStyle">@style/MyHeaderStyle</item>
+        <item name="rowHeaderStyle">@style/MyHeaderStyle</item>
+
+
+    </style>
+
+    <style name="MyImageCardViewStyle" parent="@style/Widget.Leanback.ImageCardViewStyle">
+        <item name="android:background">@color/accent</item>
+        <item name="cardType">infoUnderWithExtra</item>
+        <item name="infoAreaBackground">@color/accent</item>
+
+    </style>
+
+    <style name="MyHeaderStyle" parent="@style/Widget.Leanback.Header" >
+        <item name="android:textAppearance">@style/MyHeaderStyle.MyHeaderText</item>
+    </style>
+
+    <style name="MyHeaderStyle.MyHeaderText" parent="TextAppearance.Leanback.Header">
+        <item name="android:textSize">@dimen/lb_browse_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+</resources>
