@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.Leanback">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="imageCardViewStyle">@style/MyImageCardViewStyle</item>
         <item name="headerStyle">@style/MyHeaderStyle</item>
         <item name="rowHeaderStyle">@style/MyHeaderStyle</item>
@@ -12,9 +13,8 @@
     </style>
 
     <style name="MyImageCardViewStyle" parent="@style/Widget.Leanback.ImageCardViewStyle">
-        <item name="android:background">@color/accent</item>
         <item name="cardType">infoUnderWithExtra</item>
-        <item name="infoAreaBackground">@color/accent</item>
+        <item name="infoAreaBackground">@color/primary_dark</item>
 
     </style>
 

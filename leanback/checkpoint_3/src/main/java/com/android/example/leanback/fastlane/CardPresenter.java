@@ -2,12 +2,15 @@ package com.android.example.leanback.fastlane;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
@@ -58,12 +61,12 @@ public class CardPresenter extends Presenter {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup) {
 
+        Log.d("onCreateViewHolder", "creating viewholder");
         mContext = viewGroup.getContext();
         ImageCardView cardView = new ImageCardView(mContext);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
-        cardView.setBackgroundColor(mContext.getResources().getColor(R.color.primary));
-        cardView.findViewById(R.id.info_field).setBackgroundColor(mContext.getResources().getColor(R.color.primary));
+        ((TextView)cardView.findViewById(R.id.content_text)).setTextColor(Color.LTGRAY);
         return new ViewHolder(cardView);
     }
 
