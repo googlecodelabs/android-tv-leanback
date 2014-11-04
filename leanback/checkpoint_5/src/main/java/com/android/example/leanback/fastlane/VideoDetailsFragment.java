@@ -55,6 +55,7 @@ public class VideoDetailsFragment extends DetailsFragment {
 
     }
 
+
     private class DetailRowBuilderTask extends AsyncTask<Video, Integer, DetailsOverviewRow> {
 
         @Override

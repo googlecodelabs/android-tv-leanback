@@ -108,7 +108,7 @@ public class BackgroundHelper {
                 .load(url)
                 .resize(mMetrics.widthPixels, mMetrics.heightPixels)
                 .centerCrop()
-                .transform(new BlurTransform(mActivity))
+                .transform(BlurTransform.getInstance(mActivity))
                 .error(mDefaultBackground)
                 .into(mBackgroundTarget);
         if (null != mBackgroundTimer) {
