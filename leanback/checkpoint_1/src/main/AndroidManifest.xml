@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:banner="@drawable/filmi_banner"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >

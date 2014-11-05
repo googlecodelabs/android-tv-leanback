@@ -42,10 +42,7 @@ public class MainActivity extends Activity
                 return Color.argb(0,0,0,0);
             }
         });
-
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

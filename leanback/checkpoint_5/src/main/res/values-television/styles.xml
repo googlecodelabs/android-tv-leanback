@@ -8,14 +8,11 @@
         <item name="imageCardViewStyle">@style/MyImageCardViewStyle</item>
         <item name="headerStyle">@style/MyHeaderStyle</item>
         <item name="rowHeaderStyle">@style/MyHeaderStyle</item>
-
-
     </style>
 
     <style name="MyImageCardViewStyle" parent="@style/Widget.Leanback.ImageCardViewStyle">
         <item name="cardType">infoUnderWithExtra</item>
         <item name="infoAreaBackground">@color/primary_dark</item>
-
     </style>
 
     <style name="MyHeaderStyle" parent="@style/Widget.Leanback.Header" >
