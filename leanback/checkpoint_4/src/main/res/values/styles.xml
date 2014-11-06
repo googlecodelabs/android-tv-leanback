@@ -1,30 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.Leanback">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--&lt;!&ndash; Here we setting appcompat’s actionBarStyle &ndash;&gt;-->
+        <!--<item name="actionBarStyle">@style/</item>-->
+
+        <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorAccent">@color/accent</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="imageCardViewStyle">@style/MyImageCardViewStyle</item>
-        <item name="headerStyle">@style/MyHeaderStyle</item>
-        <item name="rowHeaderStyle">@style/MyHeaderStyle</item>
+        <item name="colorAccent">@color/accent</item>
+
+
+        <!-- The rest of your attributes -->
+    </style>
+    <style name="PagerTitle">
+        <item name="android:background">#00FFFFFF</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textSize">18sp</item>
+
     </style>
 
-    <style name="MyImageCardViewStyle" parent="@style/Widget.Leanback.ImageCardViewStyle">
-        <item name="cardType">infoUnderWithExtra</item>
-        <item name="infoAreaBackground">@color/primary_dark</item>
+    <style name="GridStyle">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:verticalSpacing">10dp</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scrollX">0dp</item>
+        <item name="android:scrollbars">none</item>
     </style>
 
-    <style name="MyHeaderStyle" parent="@style/Widget.Leanback.Header" >
-        <item name="android:textAppearance">@style/MyHeaderStyle.MyHeaderText</item>
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
-
-    <style name="MyHeaderStyle.MyHeaderText" parent="TextAppearance.Leanback.Header">
-        <item name="android:textSize">@dimen/lb_browse_header_text_size</item>
-        <item name="android:textColor">@color/accent</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-
 </resources>
