@@ -36,7 +36,7 @@ import android.widget.TextView;
  * <p/>
  * To use the component, simply add it to your view hierarchy. Then in your
  * {@link android.app.Activity} or {@link android.support.v4.app.Fragment} call
- * {@link #setViewPager(ViewPager)} providing it the ViewPager this layout is being used for.
+ * {@link #setViewPager(android.support.v4.view.ViewPager)} providing it the ViewPager this layout is being used for.
  * <p/>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
  * via {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)}. The
@@ -130,11 +130,11 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the {@link ViewPager.OnPageChangeListener}. When using {@link com.android.example.leanback.SlidingTabLayout} you are
-     * required to set any {@link ViewPager.OnPageChangeListener} through this method. This is so
+     * Set the {@link android.support.v4.view.ViewPager.OnPageChangeListener}. When using {@link SlidingTabLayout} you are
+     * required to set any {@link android.support.v4.view.ViewPager.OnPageChangeListener} through this method. This is so
      * that the layout can update it's scroll position correctly.
      *
-     * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
+     * @see android.support.v4.view.ViewPager#setOnPageChangeListener(android.support.v4.view.ViewPager.OnPageChangeListener)
      */
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mViewPagerPageChangeListener = listener;
@@ -144,7 +144,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Set the custom layout to be inflated for the tab views.
      *
      * @param layoutResId Layout id to be inflated
-     * @param textViewId  id of the {@link TextView} in the inflated view
+     * @param textViewId  id of the {@link android.widget.TextView} in the inflated view
      */
     public void setCustomTabView(int layoutResId, int textViewId) {
         mTabViewLayoutId = layoutResId;
@@ -199,7 +199,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private void populateTabStrip() {
         final PagerAdapter adapter = mViewPager.getAdapter();
-        final View.OnClickListener tabClickListener = new TabClickListener();
+        final OnClickListener tabClickListener = new TabClickListener();
 
         for (int i = 0; i < adapter.getCount(); i++) {
             View tabView = null;
@@ -302,7 +302,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     }
 
-    private class TabClickListener implements View.OnClickListener {
+    private class TabClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {

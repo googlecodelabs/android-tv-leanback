@@ -1,7 +1,7 @@
 package com.android.example.leanback;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -10,21 +10,24 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.os.Bundle;
-import android.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.android.example.leanback.data.Video;
+import com.android.example.leanback.data.VideoDataManager;
 import com.android.example.leanback.data.VideoItemContract;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -170,6 +173,8 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
     public class MovieAdapter extends SimpleCursorAdapter {
 
+        final List<Video> videoList = new ArrayList<Video>();
+        VideoDataManager.VideoItemMapper mapper;
 
         public MovieAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
             super(context, layout, c, from, to);
@@ -178,30 +183,53 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            if (mapper == null) {
+                mapper = new VideoDataManager.VideoItemMapper();
+                mapper.bindColumns(getCursor());
+            }
             View v = convertView;
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater) getActivity()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.video_card, null);
             }
+
+
             Cursor c = getCursor();
             c.moveToPosition(position);
-            ((TextView) v.findViewById(R.id.info_text)).setText(c.getString(c.getColumnIndex(VideoItemContract.VideoItemColumns.TITLE)));
+            Video video = mapper.bind(c);
+            videoList.add(video);
+
+            ((TextView) v.findViewById(R.id.info_text)).setText(video.getTitle());
 
             ImageView imageView = (ImageView) v.findViewById(R.id.info_image);
-            Picasso.with(getActivity()).load(c.getString(c.getColumnIndex(VideoItemContract.VideoItemColumns.THUMB_IMG_URL))).into(imageView);
+            Picasso.with(getActivity()).load(video.getThumbUrl()).into(imageView);
 
-
-            v.findViewById(R.id.play_button).setOnClickListener(new View.OnClickListener() {
+            Button button = (Button) v.findViewById(R.id.play_button);
+            button.setTag(position);
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), PlayerActivity.class);
+
+
+                    Video video = videoList.get((Integer) view.getTag());
+                    Intent intent = new Intent(view.getContext(), VideoDetailsActivity.class);
+                    Bundle b = new Bundle();
+                    b.putSerializable("video", video);
+                    intent.putExtras(b);
                     view.getContext().startActivity(intent);
                 }
             });
             return v;
         }
 
-
+        @Override
+        public Cursor swapCursor(Cursor c) {
+            videoList.clear();
+            return super.swapCursor(c);
+        }
     }
+
+
+
 }

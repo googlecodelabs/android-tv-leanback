@@ -49,6 +49,11 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".VideoDetailsActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

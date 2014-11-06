@@ -1,4 +1,4 @@
-package com.android.example.leanback.fastlane;
+package com.android.example.leanback;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,7 +15,7 @@ public class BlurTransform implements Transformation {
 
     static BlurTransform blurTransform;
 
-    protected  BlurTransform() {
+    protected BlurTransform() {
         // Exists only to defeat instantiation.
     }
 

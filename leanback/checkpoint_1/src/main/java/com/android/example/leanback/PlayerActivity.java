@@ -25,7 +25,7 @@ import com.google.android.exoplayer.VideoSurfaceView;
 import com.google.android.exoplayer.util.PlayerControl;
 
 /**
- * An activity that plays media using {@link ExoPlayer}.
+ * An activity that plays media using {@link com.google.android.exoplayer.ExoPlayer}.
  */
 public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         ExoPlayer.Listener, MediaCodecVideoTrackRenderer.EventListener {

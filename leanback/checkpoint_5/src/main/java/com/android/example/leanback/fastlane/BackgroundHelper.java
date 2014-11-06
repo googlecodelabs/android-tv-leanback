@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.util.DisplayMetrics;
 
+import com.android.example.leanback.BlurTransform;
 import com.android.example.leanback.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

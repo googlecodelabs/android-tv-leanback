@@ -15,6 +15,7 @@ import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.android.example.leanback.PlayerActivity;
 import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
@@ -82,7 +83,7 @@ public class RecommendationsService extends IntentService {
                                         // .setCategory(Notification.CATEGORY_RECOMMENDATION)
                                 .setCategory("recommendation")
                                 .setLargeIcon(image)
-                                .setSmallIcon(R.drawable.ic_launcher)
+                                .setSmallIcon(R.drawable.ic_stat_f)
                                 .setContentIntent(pendingIntent)
                                 .setExtras(extras))
                         .build();
@@ -102,7 +103,7 @@ public class RecommendationsService extends IntentService {
     }
 
     private PendingIntent buildPendingIntent(Video video) {
-        Intent detailsIntent = new Intent(this, VideoDetailsActivity.class);
+        Intent detailsIntent = new Intent(this, PlayerActivity.class);
         detailsIntent.putExtra(LeanbackActivity.VIDEO, video);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

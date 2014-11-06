@@ -82,7 +82,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
     }
 
-    private static class VideoItemMapper {
+    public static class VideoItemMapper {
 
         private int[] mColumnMap;
         private static final int ID = 0;
@@ -95,7 +95,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
         private static final int TAGS = 6;
         private static final int CONTENT_URL = 6;
 
-        protected void bindColumns(Cursor cursor) {
+        public void bindColumns(Cursor cursor) {
             mColumnMap = new int[9];
             mColumnMap[ID] = cursor.getColumnIndex(PROJECTION[0]);
             mColumnMap[TITLE] = cursor.getColumnIndex(PROJECTION[1]);
@@ -109,7 +109,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
         }
 
-        protected Video bind(Cursor cursor) {
+        public Video bind(Cursor cursor) {
             Video item = new Video();
             item.setId(cursor.getLong(mColumnMap[ID]));
             item.setRating(cursor.getInt(mColumnMap[RATING]));

@@ -35,4 +35,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+    <style name="WatchDetailsPlayButton">
+        <item name="android:src">@drawable/fab</item>
+    </style>
 </resources>

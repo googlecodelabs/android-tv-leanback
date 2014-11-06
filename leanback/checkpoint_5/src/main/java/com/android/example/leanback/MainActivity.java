@@ -1,7 +1,6 @@
 package com.android.example.leanback;
 
 import android.app.Activity;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
