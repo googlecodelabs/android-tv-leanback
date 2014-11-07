@@ -11,12 +11,8 @@
 
     <fragment
         android:id="@+id/playback_controls_fragment"
-        android:name="com.android.example.leanback.PlaybackOverlayFragment"
+        android:name="com.android.example.leanback.fastlane.PlaybackOverlayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <View android:id="@+id/shutter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"/>
 </FrameLayout>

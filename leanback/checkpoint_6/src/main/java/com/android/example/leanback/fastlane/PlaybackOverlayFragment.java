@@ -1,4 +1,4 @@
-package com.android.example.leanback;
+package com.android.example.leanback.fastlane;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,17 +39,16 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.util.Log;
 
+import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
 import com.android.example.leanback.data.VideoItemContract;
-import com.android.example.leanback.fastlane.CardPresenter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,6 +97,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     private OnActionListener mOnActionListener = new OnActionListener();
     private VideoDataManager mManager;
     private int mCurrentIndex;
+    private Video mVideo;
+    private ArrayList<Video> mItems;
 
     public void pressPlay() {
         mPlayPauseAction.setIndex(PlayPauseAction.PLAY);
@@ -157,6 +158,9 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
         mHandler = new Handler();
 
+        mVideo = (Video)sActivity.getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
+        Log.d(TAG, "onCreate mVideo=" + mVideo);
+
         setBackgroundType(BACKGROUND_TYPE);
         setFadingEnabled(false);
 
@@ -176,9 +180,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
                 Log.i(TAG, "onItemClicked: " + item + " row " + row);
                 if (item instanceof Video) {
                     Video selected = (Video) item;
-                    List<Video> items = getItems();
-                    for (int index = 0; index < items.size(); index++) {
-                        Video video = items.get(index);
+                    for (int index = 0; index < mItems.size(); index++) {
+                        Video video = mItems.get(index);
                         if (selected.getTitle().equals(video.getTitle())) {
                             setVideoIndex(index);
                             return;
@@ -187,7 +190,6 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
                 }
             }
         });
-
     }
 
     private void setupRows() {
@@ -215,25 +217,16 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     }
 
     private int getDuration() {
-        Video video = getItems().get(getCurrentIndex());
+        Log.d(TAG, "getDuration()");
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mmr.setDataSource(video.getContentUrl(), new HashMap<String, String>());
+            mmr.setDataSource(mVideo.getContentUrl(), new HashMap<String, String>());
         } else {
-            mmr.setDataSource(video.getContentUrl());
+            mmr.setDataSource(mVideo.getContentUrl());
         }
         String time = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         mDuration = Long.parseLong(time);
         return (int) mDuration;
-    }
-
-    private List<Video> getItems() {
-        ArrayList<Video> items = new ArrayList();
-        ObjectAdapter itemAdapter = mManager.getItemList();
-        for (int i = 0; i < itemAdapter.size(); i++) {
-            items.add((Video) itemAdapter.get(i));
-        }
-        return items;
     }
 
     private int getCurrentIndex() {
@@ -241,8 +234,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     }
 
     private void addPlaybackControlsRow() {
-        if (SHOW_DETAIL) {
-            mPlaybackControlsRow = new PlaybackControlsRow(getItems().get(getCurrentIndex()));
+        if (mVideo != null) {
+            mPlaybackControlsRow = new PlaybackControlsRow(mVideo);
         } else {
             mPlaybackControlsRow = new PlaybackControlsRow();
         }
@@ -305,19 +298,22 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     }
 
     private void updatePlaybackRow() {
-        int currentIndex = getCurrentIndex();
-        List<Video> items = getItems();
+        if (mVideo == null) {
+            return;
+        }
         if (mPlaybackControlsRow.getItem() != null) {
             Video item = (Video) mPlaybackControlsRow.getItem();
-            item.setTitle(items.get(currentIndex).getTitle());
-            item.setDescription(items.get(currentIndex).getDescription());
+            item.setTitle(mVideo.getTitle());
+            item.setDescription(mVideo.getDescription());
         }
         mPlaybackControlsRowTarget = new PicassoPlaybackControlsRowTarget(mPlaybackControlsRow);
-        updateVideoImage(items.get(currentIndex).getThumbURI());
+        updateVideoImage(mVideo.getThumbURI());
         mRowsAdapter.notifyArrayItemRangeChanged(0, 1);
-        mPlaybackControlsRow.setTotalTime(getDuration());
+        int duration = getDuration();
+        mPlaybackControlsRow.setTotalTime(duration);
         mPlaybackControlsRow.setCurrentTime(0);
         mPlaybackControlsRow.setBufferedProgress(0);
+        Log.d(TAG, "setTotalTime(getDuration()=" + duration + ")");
     }
 
     private void addOtherRows() {
@@ -357,7 +353,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
     private void next() {
         int currentIndex = getCurrentIndex();
-        if (++currentIndex >= getItems().size()) {
+        if (++currentIndex >= mItems.size()) {
             currentIndex = 0;
         }
         setVideoIndex(currentIndex);
@@ -366,17 +362,18 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     private void prev() {
         int currentIndex = getCurrentIndex();
         if (--currentIndex< 0) {
-            currentIndex = getItems().size() - 1;
+            currentIndex = mItems.size() - 1;
         }
         setVideoIndex(currentIndex);
     }
 
     private void setVideoIndex(int itemIndex) {
         mCurrentIndex = itemIndex;
+        mVideo = mItems.get(mCurrentIndex);
         if (mPlayPauseAction.getIndex() == PlayPauseAction.PLAY) {
-            mCallback.onFragmentPlayPause(getItems().get(itemIndex), 0, false);
+            mCallback.onFragmentPlayPause(mVideo, 0, false);
         } else {
-            mCallback.onFragmentPlayPause(getItems().get(itemIndex), 0, true);
+            mCallback.onFragmentPlayPause(mVideo, 0, true);
         }
         updatePlaybackRow();
     }
@@ -388,18 +385,19 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         if( currentTime > (int) mDuration ) {
             currentTime = (int) mDuration;
         }
-        mCallback.onFragmentFfwRwd(getItems().get(getCurrentIndex()), currentTime);
+        mCallback.onFragmentFfwRwd(mVideo, currentTime);
         mPlaybackControlsRow.setCurrentTime(currentTime);
         mPlaybackControlsRow.setBufferedProgress(currentTime + SIMULATED_BUFFERED_TIME);
     }
 
     private void fastRewind() {
+        Log.d(TAG, "current time: " + mPlaybackControlsRow.getCurrentTime());
         updateRapidFfRwClickTracker();
         int currentTime = mPlaybackControlsRow.getCurrentTime() - getFfRwSpeed();
         if( currentTime < 0 || currentTime > (int) mDuration ) {
             currentTime = 0;
         }
-        mCallback.onFragmentFfwRwd(getItems().get(getCurrentIndex()), currentTime);
+        mCallback.onFragmentFfwRwd(mVideo, currentTime);
         mPlaybackControlsRow.setCurrentTime(currentTime);
         mPlaybackControlsRow.setBufferedProgress(currentTime + SIMULATED_BUFFERED_TIME);
     }
@@ -467,12 +465,12 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
                 if (mPlayPauseAction.getIndex() == PlayPauseAction.PLAY) {
                     startProgressAutomation();
                     setFadingEnabled(true);
-                    mCallback.onFragmentPlayPause(getItems().get(getCurrentIndex()),
+                    mCallback.onFragmentPlayPause(mVideo,
                             mPlaybackControlsRow.getCurrentTime(), true);
                 } else {
                     stopProgressAutomation();
                     setFadingEnabled(false);
-                    mCallback.onFragmentPlayPause(getItems().get(getCurrentIndex()),
+                    mCallback.onFragmentPlayPause(mVideo,
                             mPlaybackControlsRow.getCurrentTime(), false);
                 }
             } else if (action.getId() == mSkipNextAction.getId()) {

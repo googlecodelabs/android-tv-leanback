@@ -43,6 +43,7 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String TAG = VideoItemFragment.class.getSimpleName();
 
 
     static String[] PROJECTION = {
@@ -214,8 +215,9 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
                     Video video = videoList.get((Integer) view.getTag());
                     Intent intent = new Intent(view.getContext(), VideoDetailsActivity.class);
+                    Log.d(TAG, "INTENT_EXTRA_VIDEO " + video);
                     Bundle b = new Bundle();
-                    b.putSerializable("video", video);
+                    b.putSerializable(Video.INTENT_EXTRA_VIDEO, video);
                     intent.putExtras(b);
                     view.getContext().startActivity(intent);
                 }

@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.example.leanback.data.Video;
+import com.android.example.leanback.fastlane.PlaybackOverlayFragment;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.FrameworkSampleSource;
@@ -31,42 +31,35 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         ExoPlayer.Listener, MediaCodecVideoTrackRenderer.EventListener,
         PlaybackOverlayFragment.OnPlayPauseClickedListener {
 
-
     public static final int RENDERER_COUNT = 2;
 
     private static final String TAG = "PlayerActivity";
     String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
 
 
-//    private MediaController mediaController;
-    private View shutterView;
-    private PlaybackOverlayFragment mPlaybackOverlayFragment;
-    private VideoSurfaceView mSurfaceView;
+    private VideoSurfaceView surfaceView;
 
-    private ExoPlayer player;
-    private MediaCodecVideoTrackRenderer mVideoRenderer;
-    private TrackRenderer mAudioRenderer;
+    private ExoPlayer mPlayer;
+    private MediaCodecVideoTrackRenderer videoRenderer;
+
+    private PlaybackOverlayFragment mPlaybackOverlayFragment;
 
     private boolean autoPlay = true;
     private Video mVideo;
+    private PlayerControl playerControl;
     private int mPlayerPosition;
-    private PlayerControl mPlayerControl;
-    private boolean mPlayerNeedsPrepare;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        surfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
+        surfaceView.getHolder().addCallback(this);
+        mPlaybackOverlayFragment = (PlaybackOverlayFragment)
+                getFragmentManager().findFragmentById(R.id.playback_controls_fragment);
+
         mVideo = (Video)getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
-
-        shutterView = findViewById(R.id.shutter);
-        mPlaybackOverlayFragment = (PlaybackOverlayFragment) getFragmentManager().
-                findFragmentById(R.id.playback_controls_fragment);
-        mSurfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
-        mSurfaceView.getHolder().addCallback(this);
-
         preparePlayer();
     }
 
@@ -85,44 +78,34 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     public void onVisibleBehindCanceled() {
         super.onVisibleBehindCanceled();
-        if (player != null) {
-            player.release();
-            player = null;
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
         }
-        mVideoRenderer = null;
-        shutterView.setVisibility(View.VISIBLE);
+        videoRenderer = null;
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (player != null) {
-            player.release();
-            player = null;
-        }
-        mVideoRenderer = null;
-        shutterView.setVisibility(View.VISIBLE);
-
+        releasePlayer();
     }
 
     private void maybeStartPlayback() {
         Log.d(TAG, "maybeStartPlayback");
-        Surface surface = mSurfaceView.getHolder().getSurface();
-        if (mVideoRenderer == null || surface == null || !surface.isValid()) {
+        Surface surface = surfaceView.getHolder().getSurface();
+        if (videoRenderer == null || surface == null || !surface.isValid()) {
             // We're not ready yet.
             return;
         }
-        player.sendMessage(mVideoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, surface);
+        mPlayer.sendMessage(videoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, surface);
         if (autoPlay) {
-            startPlayback();
+            mPlaybackOverlayFragment.pressPlay();
             autoPlay = false;
         }
     }
 
-    private void startPlayback() {
-        mPlaybackOverlayFragment.pressPlay();
-    }
 
     private void onError(Exception e) {
         Log.e(TAG, "Playback failed", e);
@@ -136,7 +119,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         Log.d(TAG, "player state " + playbackState);
         if (playbackState == ExoPlayer.STATE_READY) {
-            shutterView.setVisibility(View.GONE);
         }
 
     }
@@ -153,12 +135,12 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public void onVideoSizeChanged(int width, int height) {
-        mSurfaceView.setVideoWidthHeightRatio(height == 0 ? 1 : (float) width / height);
+        surfaceView.setVideoWidthHeightRatio(height == 0 ? 1 : (float) width / height);
     }
 
     @Override
     public void onDrawnToSurface(Surface surface) {
-        shutterView.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -191,42 +173,52 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        if (mVideoRenderer != null) {
-            player.blockingSendMessage(mVideoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, null);
+        if (videoRenderer != null) {
+            mPlayer.blockingSendMessage(videoRenderer, MediaCodecVideoTrackRenderer.MSG_SET_SURFACE, null);
         }
     }
 
     /**
      * Implementation of PlaybackOverlayFragment.OnPlayPauseClickedListener
      */
-    @Override
-    public void onFragmentPlayPause(Video movie, int position, Boolean playPause) {
-        if (!mVideo.getTitle().equals(movie.getTitle())) {
-            mVideo = movie;
+    public void onFragmentPlayPause(Video video, int position, Boolean playPause) {
+        Log.d(TAG, "Play/Pause Video + " + video);
+        if (mVideo == null || !mVideo.getTitle().equals(video.getTitle())) {
+            mVideo = video;
             reloadVideo();
+        }
+        if (mVideo == null) {
+            return;
         }
 
         mPlayerPosition = position;
-        mPlayerControl.seekTo(mPlayerPosition);
+        playerControl.seekTo(mPlayerPosition);
         if (playPause) {
-            mPlayerControl.start();
+            Log.d(TAG, "Play");
+            playerControl.start();
+            mPlayer.setPlayWhenReady(true);
         } else {
-            mPlayerControl.pause();
+            Log.d(TAG, "Pause");
+            playerControl.pause();
+            mPlayer.setPlayWhenReady(false);
         }
     }
 
     /**
      * Implementation of PlaybackOverlayFragment.OnPlayPauseClickedListener
      */
-    @Override
-    public void onFragmentFfwRwd(Video movie, int position) {
-        if (!mVideo.getTitle().equals(movie.getTitle())) {
-            mVideo = movie;
+    public void onFragmentFfwRwd(Video video, int position) {
+        Log.d(TAG, "Video + " + video + ", Seek to " + position);
+        if (mVideo == null || !mVideo.getTitle().equals(video.getTitle())) {
+            mVideo = video;
             reloadVideo();
+        }
+        if (mVideo == null) {
+            return;
         }
 
         mPlayerPosition = position;
-        mPlayerControl.seekTo(mPlayerPosition);
+        playerControl.seekTo(mPlayerPosition);
     }
 
     private void reloadVideo() {
@@ -234,41 +226,27 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         preparePlayer();
     }
 
+    private void releasePlayer() {
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
+        }
+        videoRenderer = null;
+    }
 
     private void preparePlayer() {
-        if (player == null) {
-            SampleSource sampleSource =
-                    new FrameworkSampleSource(this, Uri.parse(url), /* headers */ null, RENDERER_COUNT);
-            // Build the track renderers
-            mVideoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
-            mAudioRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
-            // Setup the player
-            player = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 1000, 5000);
-            player.addListener(this);
-            // Build the player controls
-            mPlayerControl = new PlayerControl(player);
-            player.prepare(mVideoRenderer, mAudioRenderer);
+        SampleSource sampleSource =
+                new FrameworkSampleSource(this, Uri.parse(url), /* headers */ null, RENDERER_COUNT);
 
-            player.seekTo(mPlayerPosition);
-            mPlayerNeedsPrepare = true;
-        }
-        if (mPlayerNeedsPrepare) {
-            player.prepare();
-            mPlayerNeedsPrepare = false;
-        }
-        // TODO(cartland): Setting the surface must be implemented.
-        // https://github.com/cartland/videoland/blob/master/app/src/main/java/com/chriscartland/videoland/player/MyPlayer.java#L218
-        // player.setSurface(mSurfaceView.getHolder().getSurface());
-        maybeStartPlayback();
+        // Build the track renderers
+        videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+        TrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
+
+        // Setup the player
+        mPlayer = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 1000, 5000);
+        mPlayer.addListener(this);
+        // Build the player controls
+        mPlayer.prepare(videoRenderer, audioRenderer);
+        playerControl = new PlayerControl(mPlayer);
     }
-
-
-    private void releasePlayer() {
-        if (player != null) {
-            mPlayerPosition = player.getCurrentPosition();
-            player.release();
-            player= null;
-        }
-    }
-
 }

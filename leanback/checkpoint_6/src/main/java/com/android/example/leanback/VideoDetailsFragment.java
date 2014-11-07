@@ -55,6 +55,9 @@ public class VideoDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                Bundle b = new Bundle();
+                b.putSerializable("video", mVideo);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });
