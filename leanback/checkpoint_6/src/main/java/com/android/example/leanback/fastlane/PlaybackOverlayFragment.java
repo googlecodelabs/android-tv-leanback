@@ -152,7 +152,17 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
-        ObjectAdapter rowContents = new CursorObjectAdapter((new SinglePresenterSelector(new CardPresenter())));
+        final ObjectAdapter rowContents = new CursorObjectAdapter((new SinglePresenterSelector(new CardPresenter())));
+        rowContents.registerObserver(new ObjectAdapter.DataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                mItems = new ArrayList<Video>();
+                for (int i = 0; i < rowContents.size(); i++) {
+                    mItems.add((Video)rowContents.get(i));
+                }
+            }
+        });
         mManager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents );
         mManager.startDataLoading();
 
@@ -220,6 +230,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         Log.d(TAG, "getDuration()");
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            Log.d(TAG, "mVideo.getContentUrl()=" + mVideo.getContentUrl());
             mmr.setDataSource(mVideo.getContentUrl(), new HashMap<String, String>());
         } else {
             mmr.setDataSource(mVideo.getContentUrl());

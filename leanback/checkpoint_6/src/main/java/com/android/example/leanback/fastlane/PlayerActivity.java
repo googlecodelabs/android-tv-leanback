@@ -34,8 +34,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public static final int RENDERER_COUNT = 2;
 
     private static final String TAG = "PlayerActivity";
-    String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
-
 
     private VideoSurfaceView surfaceView;
 
@@ -235,8 +233,14 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     private void preparePlayer() {
+        // TODO(cartland): Remove after we can handle more videos.
+        String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
+        mVideo.setContentUrl(url);
+
+        Log.d(TAG, "mVideo.getContentUrl()=" + mVideo.getContentUrl());
+
         SampleSource sampleSource =
-                new FrameworkSampleSource(this, Uri.parse(url), /* headers */ null, RENDERER_COUNT);
+                new FrameworkSampleSource(this, Uri.parse(mVideo.getContentUrl()), /* headers */ null, RENDERER_COUNT);
 
         // Build the track renderers
         videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
