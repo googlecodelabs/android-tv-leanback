@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 public class Video implements Serializable {
 
 
+    public static final String INTENT_EXTRA_VIDEO = "INTENT_EXTRA_VIDEO";
     private long id;
     private int year;
     private int rating;
