@@ -9,8 +9,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"/>
 
-    <View android:id="@+id/shutter"
+    <fragment
+        android:id="@+id/playback_controls_fragment"
+        android:name="com.android.example.leanback.fastlane.PlaybackOverlayFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"/>
+        android:layout_height="match_parent" />
+
 </FrameLayout>

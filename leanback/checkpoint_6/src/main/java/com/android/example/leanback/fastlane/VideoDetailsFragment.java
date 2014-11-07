@@ -19,7 +19,6 @@ import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.widget.Toast;
 
-import com.android.example.leanback.PlayerActivity;
 import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
