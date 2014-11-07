@@ -19,6 +19,7 @@ import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.view.View;
 
 import com.android.example.leanback.R;
+import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
 import com.android.example.leanback.data.VideoItemContract;
 
@@ -72,7 +73,7 @@ public class LeanbackBrowseFragment extends BrowseFragment {
             public void onItemClicked(Presenter.ViewHolder viewHolder, Object o, RowPresenter.ViewHolder viewHolder2, Row row) {
 
                 Intent intent = new Intent(getActivity(), VideoDetailsActivity.class);
-                intent.putExtra(LeanbackActivity.VIDEO, (Serializable)o);
+                intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)o);
                 startActivity(intent);
 
             }
