@@ -16,6 +16,7 @@
 
     <string name="action_play">Play</string>
     <string name="action_watch_later">Watch Later</string>
+    <string name="related_videos">Related Videos</string>
 
 
 </resources>

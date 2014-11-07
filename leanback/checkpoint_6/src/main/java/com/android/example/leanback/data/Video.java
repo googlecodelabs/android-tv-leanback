@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Created by anirudhd on 10/25/14.
@@ -93,5 +95,11 @@ public class Video implements Serializable {
         return id;
     }
 
-
+    public URI getThumbURI() {
+        try {
+            return new URI(getThumbUrl());
+        } catch (URISyntaxException e) {
+            return null;
+        }
+    }
 }
