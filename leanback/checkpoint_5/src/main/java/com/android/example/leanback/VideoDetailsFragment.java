@@ -48,6 +48,7 @@ public class VideoDetailsFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mVideo = (Video)getActivity().getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
         Picasso.with(getActivity()).load(mVideo.getThumbUrl()).transform(BlurTransform.getInstance(this.getActivity())).fit().into((ImageView) mView.findViewById(R.id.image_view));
         ((TextView)mView.findViewById(R.id.movie_info_title)).setText(mVideo.getTitle());
         ((TextView)mView.findViewById(R.id.movie_info_text)).setText(mVideo.getDescription());
@@ -55,6 +56,7 @@ public class VideoDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                intent.putExtra(Video.INTENT_EXTRA_VIDEO, mVideo);
                 startActivity(intent);
             }
         });

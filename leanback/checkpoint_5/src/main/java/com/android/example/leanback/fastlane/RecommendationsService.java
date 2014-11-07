@@ -104,7 +104,7 @@ public class RecommendationsService extends IntentService {
 
     private PendingIntent buildPendingIntent(Video video) {
         Intent detailsIntent = new Intent(this, PlayerActivity.class);
-        detailsIntent.putExtra(LeanbackActivity.VIDEO, video);
+        detailsIntent.putExtra(Video.INTENT_EXTRA_VIDEO, video);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(VideoDetailsActivity.class);
