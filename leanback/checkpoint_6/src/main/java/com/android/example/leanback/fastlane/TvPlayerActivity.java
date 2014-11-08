@@ -70,7 +70,9 @@ public class TvPlayerActivity extends Activity implements SurfaceHolder.Callback
 
     @Override
     public void onPause() {
-        requestVisibleBehind(true);
+        if (playerControl.isPlaying()) {
+            requestVisibleBehind(true);
+        }
         super.onPause();
     }
 
