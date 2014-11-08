@@ -10,8 +10,6 @@ import com.android.example.leanback.R;
  */
 public class LeanbackActivity extends Activity {
 
-    public  static final String VIDEO = "video";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -55,6 +55,7 @@ public class VideoDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                intent.putExtra(Video.INTENT_EXTRA_VIDEO, mVideo);
                 startActivity(intent);
             }
         });

@@ -215,7 +215,7 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
                     Video video = videoList.get((Integer) view.getTag());
                     Intent intent = new Intent(view.getContext(), VideoDetailsActivity.class);
                     Bundle b = new Bundle();
-                    b.putSerializable("video", video);
+                    b.putSerializable(Video.INTENT_EXTRA_VIDEO, video);
                     intent.putExtras(b);
                     view.getContext().startActivity(intent);
                 }
