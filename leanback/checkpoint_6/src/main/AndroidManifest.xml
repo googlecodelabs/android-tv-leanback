@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.example.leanback" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:banner="@drawable/filmi_banner"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.android.example.leanback.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="com.android.example.leanback.data.VideoContentProvider"
+            android:authorities="com.android.example.leanback"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
+
+        <activity
+            android:name="com.android.example.leanback.PlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_player"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
+        </activity>
+
+        <activity
+            android:name=".VideoDetailsActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name="com.android.example.leanback.fastlane.LeanbackActivity"
+            android:label="@string/title_activity_player"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.android.example.leanback.fastlane.VideoDetailsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_player"
+            android:theme="@style/AppTheme" >
+        </activity>
+
+        <receiver
+            android:name="com.android.example.leanback.fastlane.BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
+        <service
+            android:name="com.android.example.leanback.fastlane.RecommendationsService"
+            android:enabled="true"
+            android:exported="true"/>
+    </application>
+
+</manifest>
