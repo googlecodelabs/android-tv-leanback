@@ -1,8 +1,5 @@
 package com.android.example.leanback.data;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
@@ -11,6 +8,7 @@ import java.io.Serializable;
 public class Video implements Serializable {
 
 
+    public static final String INTENT_EXTRA_VIDEO = "INTENT_EXTRA_VIDEO";
     private long id;
     private int year;
     private int rating;
@@ -92,6 +90,4 @@ public class Video implements Serializable {
     public long getId() {
         return id;
     }
-
-
 }

@@ -46,7 +46,7 @@ public class VideoDetailsFragment extends DetailsFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedVideo = (Video) getActivity().getIntent().getSerializableExtra(LeanbackActivity.VIDEO);
+        selectedVideo = (Video) getActivity().getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
         new DetailRowBuilderTask().execute(selectedVideo);
 
         bgHelper = new BackgroundHelper(getActivity());
@@ -94,7 +94,7 @@ public class VideoDetailsFragment extends DetailsFragment {
                 public void onActionClicked(Action action) {
                     if (action.getId() == ACTION_PLAY) {
                         Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                        intent.putExtra(LeanbackActivity.VIDEO, (Serializable)selectedVideo);
+                        intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)selectedVideo);
                         startActivity(intent);
                     }
                     else {

@@ -19,7 +19,7 @@ public class VideoDetailsActivity extends Activity {
         setContentView(R.layout.activity_details);
 
 
-        Video video = (Video)getIntent().getExtras().get("video");
+        Video video = (Video)getIntent().getExtras().get(Video.INTENT_EXTRA_VIDEO);
         VideoDetailsFragment frag = (VideoDetailsFragment)getFragmentManager().findFragmentById(R.id.details_frag);
         frag.setmVideo(video);
 

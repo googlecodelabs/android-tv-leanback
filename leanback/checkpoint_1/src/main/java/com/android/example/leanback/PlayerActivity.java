@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.Toast;
 
+import com.android.example.leanback.data.Video;
 import com.google.android.exoplayer.ExoPlaybackException;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.FrameworkSampleSource;
@@ -34,8 +35,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public static final int RENDERER_COUNT = 2;
 
     private static final String TAG = "PlayerActivity";
-    String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
 
+    private Video mVideo;
 
     private MediaController mediaController;
     private View shutterView;
@@ -52,6 +53,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        mVideo = (Video)getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
+
         View root = findViewById(R.id.root);
         mediaController = new MediaController(this);
 
@@ -62,8 +65,16 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         surfaceView = (VideoSurfaceView) findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(this);
 
+        preparePlayer();
+    }
+
+    private void preparePlayer() {
+        // TODO(cartland): Remove sample video.
+        String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
+        mVideo.setContentUrl(url);
+
         SampleSource sampleSource =
-                new FrameworkSampleSource(this, Uri.parse(url), /* headers */ null, RENDERER_COUNT);
+                new FrameworkSampleSource(this, Uri.parse(mVideo.getContentUrl()), /* headers */ null, RENDERER_COUNT);
 
         // Build the track renderers
         videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
@@ -78,7 +89,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         mediaController.setEnabled(true);
         player.prepare(videoRenderer, audioRenderer);
     }
-
 
     @Override
     public void onResume() {

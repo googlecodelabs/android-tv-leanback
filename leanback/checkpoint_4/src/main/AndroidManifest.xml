@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.android.example.leanback" >
+
+    <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="14"
+        tools:overrideLibrary="android.support.v17.leanback, android.support.v7.recyclerview, android.support.v4"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
 
     <uses-feature
         android:name="android.software.leanback"

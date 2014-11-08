@@ -85,7 +85,7 @@ public class LeanbackBrowseFragment extends BrowseFragment {
             public void onItemClicked(Presenter.ViewHolder viewHolder, Object o, RowPresenter.ViewHolder viewHolder2, Row row) {
 
                 Intent intent = new Intent(getActivity(), VideoDetailsActivity.class);
-                intent.putExtra(LeanbackActivity.VIDEO, (Serializable)o);
+                intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)o);
                 startActivity(intent);
 
             }
