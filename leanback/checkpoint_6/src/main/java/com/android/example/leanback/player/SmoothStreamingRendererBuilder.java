@@ -22,8 +22,8 @@ import android.media.UnsupportedSchemeException;
 import android.os.Handler;
 import android.widget.TextView;
 
-import com.chriscartland.videoland.player.MyPlayer.RendererBuilder;
-import com.chriscartland.videoland.player.MyPlayer.RendererBuilderCallback;
+import com.android.example.leanback.player.MyPlayer.RendererBuilder;
+import com.android.example.leanback.player.MyPlayer.RendererBuilderCallback;
 import com.google.android.exoplayer.DefaultLoadControl;
 import com.google.android.exoplayer.LoadControl;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;

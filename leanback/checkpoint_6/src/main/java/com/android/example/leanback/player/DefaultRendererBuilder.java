@@ -20,8 +20,8 @@ import android.media.MediaCodec;
 import android.net.Uri;
 import android.widget.TextView;
 
-import com.chriscartland.videoland.player.MyPlayer.RendererBuilder;
-import com.chriscartland.videoland.player.MyPlayer.RendererBuilderCallback;
+import com.android.example.leanback.player.MyPlayer.RendererBuilder;
+import com.android.example.leanback.player.MyPlayer.RendererBuilderCallback;
 import com.google.android.exoplayer.FrameworkSampleSource;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;

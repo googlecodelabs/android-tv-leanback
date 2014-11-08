@@ -20,7 +20,6 @@ import android.media.MediaDrm.KeyRequest;
 import android.media.MediaDrm.ProvisionRequest;
 import android.text.TextUtils;
 
-import com.chriscartland.videoland.util.MyUtil;
 import com.google.android.exoplayer.drm.MediaDrmCallback;
 
 import org.apache.http.client.ClientProtocolException;
