@@ -12,6 +12,8 @@
 
         <!-- The rest of your attributes -->
     </style>
+    <style name="AppTheme.Fullscreen" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
+    </style>
     <style name="PagerTitle">
         <item name="android:background">#00FFFFFF</item>
         <item name="android:textColor">#fff</item>

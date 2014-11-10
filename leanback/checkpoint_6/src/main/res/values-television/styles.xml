@@ -9,6 +9,8 @@
         <item name="headerStyle">@style/MyHeaderStyle</item>
         <item name="rowHeaderStyle">@style/MyHeaderStyle</item>
     </style>
+    <style name="AppTheme.Fullscreen" parent="AppTheme">
+    </style>
 
     <style name="MyImageCardViewStyle" parent="@style/Widget.Leanback.ImageCardViewStyle">
         <item name="cardType">infoUnderWithExtra</item>

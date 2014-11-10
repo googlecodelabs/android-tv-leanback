@@ -19,6 +19,7 @@ import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.widget.Toast;
 
+import com.android.example.leanback.PlayerActivity;
 import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
@@ -92,7 +93,7 @@ public class VideoDetailsFragment extends DetailsFragment {
                 @Override
                 public void onActionClicked(Action action) {
                     if (action.getId() == ACTION_PLAY) {
-                        Intent intent = new Intent(getActivity(), TvPlayerActivity.class);
+                        Intent intent = new Intent(getActivity(), PlayerActivity.class);
                         intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)selectedVideo);
                         startActivity(intent);
                     }

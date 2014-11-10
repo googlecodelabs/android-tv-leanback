@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.android.example.leanback.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,15 +38,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_player"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
-        </activity>
-
-        <activity
-            android:name="com.android.example.leanback.fastlane.TvPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_player"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.Leanback" >
+            android:theme="@style/AppTheme.Fullscreen" >
         </activity>
 
         <activity
@@ -64,6 +56,7 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.android.example.leanback.fastlane.VideoDetailsActivity"
             android:exported="true"

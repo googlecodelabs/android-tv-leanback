@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.example.leanback.player;
+package com.android.example.leanback;
 
 import android.app.UiModeManager;
 import android.content.Context;
@@ -115,9 +115,6 @@ public class MyUtil {
     }
 
     public static boolean isRunningInTvMode(Context ctx) {
-        if (!ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK)) {
-            return false;
-        }
         UiModeManager uiModeManager = (UiModeManager) ctx.getSystemService(Context.UI_MODE_SERVICE);
         return uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
