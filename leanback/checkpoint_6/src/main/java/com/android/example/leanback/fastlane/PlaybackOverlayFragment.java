@@ -228,6 +228,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     }
 
     private int getDuration() {
+//        String testUrl = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
+//        mVideo.setContentUrl(testUrl);
         Log.d(TAG, "getDuration()");
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -238,6 +240,8 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         }
         String time = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         mDuration = Long.parseLong(time);
+        Log.d(TAG, "mDuration=" + mDuration);
+
         return (int) mDuration;
     }
 

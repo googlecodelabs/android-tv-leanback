@@ -237,10 +237,8 @@ public class TvPlayerActivity extends Activity implements SurfaceHolder.Callback
 
     private void preparePlayer() {
         // TODO(cartland): Remove after we can handle more videos.
-        String url = "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/April%20Fool's%202013/Introducing%20Google%20Fiber%20to%20the%20Pole.mp4";
-        mVideo.setContentUrl(url);
 
-        Log.d(TAG, "mVideo.getContentUrl()=" + mVideo.getContentUrl());
+    //    Log.d(TAG, "mVideo.getContentUrl()=" + mVideo.getContentUrl());
 
         SampleSource sampleSource =
                 new FrameworkSampleSource(this, Uri.parse(mVideo.getContentUrl()), /* headers */ null, RENDERER_COUNT);
