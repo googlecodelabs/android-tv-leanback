@@ -125,6 +125,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             mediaController.setMediaPlayer(new PlayerControl(player));
             mediaController.setEnabled(true);
         }
+        maybeStartPlayback();
     }
 
     private void releasePlayer() {
@@ -140,7 +141,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         Log.d(TAG, "reloadVideo()");
         releasePlayer();
         preparePlayer();
-        maybeStartPlayback();
     }
 
     @Override
