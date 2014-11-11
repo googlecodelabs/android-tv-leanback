@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "com.android.example.leanback"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
