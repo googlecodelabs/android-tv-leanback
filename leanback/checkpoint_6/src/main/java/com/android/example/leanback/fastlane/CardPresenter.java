@@ -91,7 +91,7 @@ public class CardPresenter extends Presenter {
         Video video = (Video) o;
         ((ViewHolder) viewHolder).mCardView.setTitleText(video.getTitle());
         ((ViewHolder) viewHolder).mCardView.setContentText(video.getDescription());
-        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH * 2, CARD_HEIGHT * 2);
+        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, gCARD_HEIGHT);
         ((ViewHolder) viewHolder).updateCardViewImage(video.getThumbUrl());
     }
 
