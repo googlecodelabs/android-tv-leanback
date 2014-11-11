@@ -51,7 +51,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
     private final VideoItemMapper mMapper;
 
 
-    static String[] PROJECTION = {
+    public static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,
             VideoItemContract.VideoItemColumns.TITLE,
             VideoItemContract.VideoItemColumns.CATEGORY,

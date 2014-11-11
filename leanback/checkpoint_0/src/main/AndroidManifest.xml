@@ -29,14 +29,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <android:uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -72,15 +64,7 @@
             android:name="com.android.example.leanback.VideoDetailsActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name="com.android.example.leanback.fastlane.LeanbackActivity"
-            android:label="@string/title_activity_leanback"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
-        </activity>
+
     </application>
 
 </manifest>
