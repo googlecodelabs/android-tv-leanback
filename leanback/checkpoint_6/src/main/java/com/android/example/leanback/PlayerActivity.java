@@ -113,11 +113,11 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         player.addListener(this);
         player.prepare(videoRenderer, audioRenderer);
         if (mIsOnTv) {
-            // This PlayerControl should not be used directly to manipulate the player
-            // because it will get out of sync with the PlaybackOverlayFragment.
-            // Instead, we have created methods such as PlaybackOverlayFragment.pressPlay()
-            // that will eventually call the methods in this class according to the
-            // PlaybackOverlayFragment.OnPlayPauseClickedListener interface.
+            // This PlayerControl must stay in sync with PlaybackOverlayFragment.
+            // We created methods such as PlaybackOverlayFragment.pressPlay() to request
+            // that the fragment change the playback state. When the fragment receives a playback
+            // request, it updates the UI and then calls a method in this activity according to
+            // PlaybackOverlayFragment.OnPlayPauseClickedListener.
             playerControl = new PlayerControl(player);
         } else {
             // Build the player controls
@@ -148,7 +148,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     public void onPause() {
         if (mIsOnTv) {
             if (playerControl != null && playerControl.isPlaying()) {
-                // Let's video play behind the launcher screen when the user preses
+                // Allows video to play behind the launcher screen when the user preses
                 // the Home button.
                 // This is only available on API level 21+, and we are assuming
                 // all TV devices on running Android 21+.
@@ -289,7 +289,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         }
 
         mPlayerPosition = position;
-        // PlayerControl must ONLY be called in response to the PlaybackOverlayFragment callbacks
+        // seekTo(), start(), pause() are ONLY be called in response to the fragment callbacks
         playerControl.seekTo(mPlayerPosition);
         if (playPause) {
             Log.d(TAG, "Play");
@@ -316,7 +316,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         }
 
         mPlayerPosition = position;
-        // PlayerControl must ONLY be called in response to the PlaybackOverlayFragment callbacks
+        // seekTo() is ONLY be called in response to the fragment callbacks
         playerControl.seekTo(mPlayerPosition);
     }
 
