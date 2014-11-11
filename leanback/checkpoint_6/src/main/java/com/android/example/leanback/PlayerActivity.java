@@ -52,7 +52,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     public static final int RENDERER_COUNT = 2;
 
-    private static final String TAG = "PlayerActivity";
+    private static final String TAG = PlayerActivity.class.getSimpleName();
 
     private Video mVideo;
 
@@ -74,6 +74,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_player);
 
         mVideo = (Video)getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
@@ -100,7 +101,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     private void preparePlayer() {
-
+        Log.d(TAG, "preparePlayer()");
         SampleSource sampleSource =
                 new FrameworkSampleSource(this, Uri.parse(mVideo.getContentUrl()), /* headers */ null, RENDERER_COUNT);
 
@@ -127,6 +128,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     private void releasePlayer() {
+        Log.d(TAG, "releasePlayer()");
         if (player != null) {
             player.release();
             player = null;
@@ -135,8 +137,10 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     }
 
     private void reloadVideo() {
+        Log.d(TAG, "reloadVideo()");
         releasePlayer();
         preparePlayer();
+        maybeStartPlayback();
     }
 
     @Override
@@ -208,7 +212,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        Log.d(TAG, "player state " + playbackState);
+        Log.d(TAG, "onPlayerStateChanged(playbackState=" + playbackState + ")");
         if (!mIsOnTv && playbackState == ExoPlayer.STATE_READY) {
             shutterView.setVisibility(View.GONE);
             mediaController.show(0);
@@ -277,7 +281,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
      * Implementation of PlaybackOverlayFragment.OnPlayPauseClickedListener
      */
     public void onFragmentPlayPause(Video video, int position, Boolean playPause) {
-        Log.d(TAG, "Play/Pause Video + " + video);
+        Log.d(TAG, "onFragmentPlayPause()");
         if (mVideo == null || !mVideo.getTitle().equals(video.getTitle())) {
             // When the user selects another video from the PlaybackOverlayFragment, we need
             // to recognize that the video has changed and reload the player.
@@ -304,7 +308,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
      * Implementation of PlaybackOverlayFragment.OnPlayPauseClickedListener
      */
     public void onFragmentFfwRwd(Video video, int position) {
-        Log.d(TAG, "Video + " + video + ", Seek to " + position);
+        Log.d(TAG, "onFragmentFfwRwd() seek to " + position);
         if (mVideo == null || !mVideo.getTitle().equals(video.getTitle())) {
             // When the user selects another video from the PlaybackOverlayFragment, we need
             // to recognize that the video has changed and reload the player.
