@@ -19,8 +19,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.example.leanback" >
 
+    <!-- Uncomment this to  see the app in the Leanback launcher
     <uses-feature android:name="android.software.leanback"
         android:required="false" />
+        -->
 
     <uses-sdk
         android:minSdkVersion="14"
