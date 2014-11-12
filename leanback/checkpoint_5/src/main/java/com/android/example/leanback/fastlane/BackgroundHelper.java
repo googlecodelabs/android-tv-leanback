@@ -28,9 +28,6 @@ import com.android.example.leanback.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * Created by anirudhd on 11/3/14.
  */
@@ -38,9 +35,18 @@ public class BackgroundHelper {
 
     private final Handler mHandler = new Handler();
 
+    private final Runnable mUpdateBackgroundAction = new Runnable() {
+        @Override
+        public void run() {
+            if (mBackgroundURL != null) {
+                updateBackground(mBackgroundURL);
+            }
+        }
+    };
+
     private Activity mActivity;
+    private BackgroundManager mBackgroundManager;
     private DisplayMetrics mMetrics;
-    private Timer mBackgroundTimer;
     private String mBackgroundURL;
 
 
@@ -51,22 +57,27 @@ public class BackgroundHelper {
         this.mActivity = mActivity;
     }
 
-    private long BACKGROUND_UPDATE_DELAY = 200;
+    private long BACKGROUND_UPDATE_DELAY = 200L;
 
 
     public void prepareBackgroundManager() {
-        BackgroundManager backgroundManager = BackgroundManager.getInstance(mActivity);
-        backgroundManager.attach(mActivity.getWindow());
-        mBackgroundTarget = new PicassoBackgroundManagerTarget(backgroundManager);
+        mBackgroundManager = BackgroundManager.getInstance(mActivity);
+        mBackgroundManager.attach(mActivity.getWindow());
+        mBackgroundTarget = new PicassoBackgroundManagerTarget(mBackgroundManager);
         mDefaultBackground = mActivity.getResources().getDrawable(R.drawable.default_background);
         mMetrics = new DisplayMetrics();
         mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
 
-    public void setBackgroundUrl(String backgroundUrl) {
-        this.mBackgroundURL = backgroundUrl;
+    public void release() {
+        mHandler.removeCallbacksAndMessages(null);
+        mBackgroundManager.release();
     }
 
+    public void setBackgroundUrl(String backgroundUrl) {
+        this.mBackgroundURL = backgroundUrl;
+        scheduleUpdate();
+    }
 
     static class PicassoBackgroundManagerTarget implements Target {
         BackgroundManager mBackgroundManager;
@@ -128,9 +139,6 @@ public class BackgroundHelper {
                 .transform(BlurTransform.getInstance(mActivity))
                 .error(mDefaultBackground)
                 .into(mBackgroundTarget);
-        if (null != mBackgroundTimer) {
-            mBackgroundTimer.cancel();
-        }
     }
 
     protected void updateBackground(Drawable drawable) {
@@ -141,26 +149,16 @@ public class BackgroundHelper {
         BackgroundManager.getInstance(mActivity).setDrawable(mDefaultBackground);
     }
 
+    private void scheduleUpdate() {
+        mHandler.removeCallbacks(mUpdateBackgroundAction);
+        mHandler.postDelayed(mUpdateBackgroundAction, BACKGROUND_UPDATE_DELAY);
+    }
+
+    /**
+     * Deprecated, simply use {@link #setBackgroundUrl(String)}
+     */
+    @Deprecated
     public void startBackgroundTimer() {
-        if (null != mBackgroundTimer) {
-            mBackgroundTimer.cancel();
-        }
-        mBackgroundTimer = new Timer();
-        mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
     }
 
-    private class UpdateBackgroundTask extends TimerTask {
-
-        @Override
-        public void run() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mBackgroundURL != null) {
-                        updateBackground(mBackgroundURL);
-                    }
-                }
-            });
-        }
-    }
 }

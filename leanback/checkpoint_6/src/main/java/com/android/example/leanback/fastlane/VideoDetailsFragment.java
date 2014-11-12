@@ -76,6 +76,7 @@ public class VideoDetailsFragment extends DetailsFragment {
     @Override
     public void onStop() {
         mRowBuilderTask.cancel(true);
+        bgHelper.release();
         super.onStop();
     }
 
