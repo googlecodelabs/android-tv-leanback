@@ -33,6 +33,7 @@ import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.example.leanback.PlayerActivity;
@@ -56,14 +57,15 @@ public class VideoDetailsFragment extends DetailsFragment {
 
     private static final int ACTION_PLAY = 1;
     private static final int ACTION_WATCH_LATER = 2;
-    BackgroundHelper bgHelper;
 
+    private DetailRowBuilderTask mRowBuilderTask;
+    private BackgroundHelper bgHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectedVideo = (Video) getActivity().getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
-        new DetailRowBuilderTask().execute(selectedVideo);
+        (mRowBuilderTask = new DetailRowBuilderTask()).execute(selectedVideo);
 
         bgHelper = new BackgroundHelper(getActivity());
         bgHelper.prepareBackgroundManager();
@@ -71,24 +73,28 @@ public class VideoDetailsFragment extends DetailsFragment {
 
     }
 
+    @Override
+    public void onStop() {
+        mRowBuilderTask.cancel(true);
+        super.onStop();
+    }
 
     private class DetailRowBuilderTask extends AsyncTask<Video, Integer, DetailsOverviewRow> {
 
         @Override
         protected DetailsOverviewRow doInBackground(Video... videos) {
             DetailsOverviewRow row = new DetailsOverviewRow(videos[0]);
-            Bitmap poster = null;
             try {
-                poster = Picasso.with(getActivity())
+                Bitmap poster = Picasso.with(getActivity())
                         .load(videos[0].getThumbUrl())
                         .resize(dpToPx(DETAIL_THUMB_WIDTH, getActivity().getApplicationContext()),
                                 dpToPx(DETAIL_THUMB_HEIGHT, getActivity().getApplicationContext()))
                         .centerCrop()
                         .get();
+                row.setImageBitmap(getActivity(), poster);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("VideoDetailsFragment", "Cannot load thumbnail for " + videos[0].getId(), e);
             }
-            row.setImageBitmap(getActivity(), poster);
             row.addAction(new Action(ACTION_PLAY, getResources().getString(
                     R.string.action_play)));
             row.addAction(new Action(ACTION_WATCH_LATER, getResources().getString(R.string.action_watch_later)));
