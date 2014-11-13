@@ -65,6 +65,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         new DetailRowBuilderTask().execute(selectedVideo);
     }
 
+
     private class DetailRowBuilderTask extends AsyncTask<Video, Integer, DetailsOverviewRow> {
 
         @Override
@@ -93,7 +94,7 @@ public class VideoDetailsFragment extends DetailsFragment {
         protected void onPostExecute(DetailsOverviewRow detailRow) {
             ClassPresenterSelector ps = new ClassPresenterSelector();
             DetailsOverviewRowPresenter dorPresenter =
-                    new DetailsOverviewRowPresenter(new DetailsDescriptionPresenter());
+                    new DetailsOverviewRowPresenter(new DetailsDescriptionPresenter(getActivity()));
             // set detail background and style
             dorPresenter.setBackgroundColor(getResources().getColor(R.color.primary));
             dorPresenter.setStyleLarge(true);
@@ -131,7 +132,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             adapter.add(new ListRow(header, rowAdapter));
             setAdapter(adapter);
             // <END>
-        }
+            }
 
     }
 

@@ -32,6 +32,7 @@
 
     <string name="action_play">Play</string>
     <string name="action_watch_later">Watch Later</string>
+    <string name="rating">Rating</string>
 
 
 </resources>

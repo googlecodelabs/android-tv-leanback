@@ -17,12 +17,27 @@
 package com.android.example.leanback.fastlane;
 
 
+import android.content.Context;
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
 import android.util.Log;
 
+import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 
 public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPresenter {
+
+    private final Context mContext;
+
+    private DetailsDescriptionPresenter() {
+        super();
+        this.mContext = null;
+    }
+
+    public DetailsDescriptionPresenter(Context ctx) {
+        super();
+        this.mContext = ctx;
+    }
+
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
         Video video = (Video) item;
@@ -30,7 +45,8 @@ public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPrese
         if (video != null) {
             Log.d("DetailsDescriptionPresenter", String.format("%s, %s, %s", video.getTitle(), video.getThumbUrl(), video.getDescription()));
             viewHolder.getTitle().setText(video.getTitle());
-            viewHolder.getSubtitle().setText(String.valueOf(video.getRating()));
+            viewHolder.getSubtitle().setText(mContext.getString(R.string.rating) + ": "
+                    + String.valueOf(video.getRating()));
             viewHolder.getBody().setText(video.getDescription());
         }
     }
