@@ -1,8 +1,9 @@
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+# OS X
 .DS_Store
-/build
+# IDEA
+.idea/
+*.iml
+#
 # Built application files
 *.apk
 *.ap_
@@ -29,3 +30,4 @@ proguard/
 
 # Log Files
 *.log
+# EOF
