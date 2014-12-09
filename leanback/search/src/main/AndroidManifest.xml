@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.example.leanback.search"
+    >
+
+    <application>
+        <meta-data android:name="android.app.default_searchable"
+            android:value=".SearchActivity" />
+
+        <activity android:name=".SearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <provider
+            android:name="com.android.example.leanback.search.SearchContentProvider"
+            android:authorities="${packageName}"
+            android:exported="true"
+            >
+            <path-permission android:pathPrefix="/search"
+                android:readPermission="android.permission.GLOBAL_SEARCH"/>
+        </provider>
+
+    </application>
+
+</manifest>
