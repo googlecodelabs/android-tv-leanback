@@ -94,6 +94,12 @@ public class LeanbackBrowseFragment extends BrowseFragment {
 
     }
 
+    @Override
+    public void onStop() {
+        bgHelper.release();
+        super.onStop();
+    }
+
     protected OnItemViewClickedListener getDefaultItemViewClickedListener() {
         return new OnItemViewClickedListener() {
 

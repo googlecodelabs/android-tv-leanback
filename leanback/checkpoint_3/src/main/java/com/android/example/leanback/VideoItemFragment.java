@@ -32,18 +32,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
 import com.android.example.leanback.data.VideoItemContract;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -76,12 +74,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
     private OnFragmentInteractionListener mListener;
 
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private MovieAdapter mAdapter;
     private GridView mGridView;
 
     // TODO: Rename and change types of parameters
@@ -116,14 +108,12 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         View rootView = inflater.inflate(R.layout.fragment_videoitem_list, container, false);
         mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
-        mAdapter = new MovieAdapter(getActivity(),
-                android.R.layout.two_line_list_item, null, new String[]{VideoItemContract.VideoItem._ID, VideoItemContract.VideoItem.TITLE, VideoItemContract.VideoItem.THUMB_IMG_URL, VideoItemContract.VideoItem.CONTENT_URL, VideoItemContract.VideoItem.YEAR}, null);
-        mGridView.setAdapter(mAdapter);
+        mGridView.setAdapter(new MovieAdapter(getActivity()));
 
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                CursorWrapper c = (CursorWrapper) ((SimpleCursorAdapter) parent.getAdapter()).getItem(position);
+                CursorWrapper c = (CursorWrapper) parent.getAdapter().getItem(position);
                 ((OnFragmentInteractionListener) getActivity()).onFragmentInteraction(c.getString(c.getColumnIndex(VideoItemContract.VideoItem._ID)), c.getString(c.getColumnIndex(VideoItemContract.VideoItem.CONTENT_URL)));
             }
 
@@ -161,14 +151,14 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        ((SimpleCursorAdapter) mGridView.getAdapter()).swapCursor(cursor);
+        ((CursorAdapter) mGridView.getAdapter()).swapCursor(cursor);
         mGridView.setVisibility(View.VISIBLE);
         mGridView.smoothScrollToPosition(0);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
-        ((SimpleCursorAdapter) mGridView.getAdapter()).swapCursor(null);
+        ((CursorAdapter) mGridView.getAdapter()).swapCursor(null);
     }
 
     /**
@@ -187,65 +177,74 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
     }
 
 
-    public class MovieAdapter extends SimpleCursorAdapter {
+    private static class MovieAdapter extends ResourceCursorAdapter {
 
-        final List<Video> videoList = new ArrayList<Video>();
-        VideoDataManager.VideoItemMapper mapper;
+        private final VideoDataManager.VideoItemMapper mMapper = new VideoDataManager.VideoItemMapper();
+        private final Picasso mPicasso;
 
-        public MovieAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
-            super(context, layout, c, from, to);
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (mapper == null) {
-                mapper = new VideoDataManager.VideoItemMapper();
-                mapper.bindColumns(getCursor());
+        private final static View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.getContext().startActivity(
+                        new Intent(v.getContext(), VideoDetailsActivity.class)
+                                .putExtra(Video.INTENT_EXTRA_VIDEO, (Video) v.getTag())
+                );
             }
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi = (LayoutInflater) getActivity()
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(R.layout.video_card, null);
-            }
+        };
 
-
-            Cursor c = getCursor();
-            c.moveToPosition(position);
-            Video video = mapper.bind(c);
-            videoList.add(video);
-
-            ((TextView) v.findViewById(R.id.info_text)).setText(video.getTitle());
-
-            ImageView imageView = (ImageView) v.findViewById(R.id.info_image);
-            Picasso.with(getActivity()).load(video.getThumbUrl()).into(imageView);
-
-            Button button = (Button) v.findViewById(R.id.play_button);
-            button.setTag(position);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-                    Video video = videoList.get((Integer) view.getTag());
-                    Intent intent = new Intent(view.getContext(), VideoDetailsActivity.class);
-                    Bundle b = new Bundle();
-                    b.putSerializable(Video.INTENT_EXTRA_VIDEO, video);
-                    intent.putExtras(b);
-                    view.getContext().startActivity(intent);
-                }
-            });
-            return v;
+        public MovieAdapter(Context context) {
+            super(context, R.layout.video_card, null, 0);
+            this.mPicasso = Picasso.with(context);
         }
 
         @Override
-        public Cursor swapCursor(Cursor c) {
-            videoList.clear();
-            return super.swapCursor(c);
+        public Cursor swapCursor(Cursor newCursor) {
+            final Cursor old = super.swapCursor(newCursor);
+            if (null != newCursor) {
+                mMapper.bindColumns(newCursor);
+            }
+            return old;
+        }
+
+        @Override
+        public void changeCursor(Cursor cursor) {
+            super.changeCursor(cursor);
+            if (null != cursor) {
+                mMapper.bindColumns(cursor);
+            }
+        }
+
+        public static class ViewHolder {
+            public final TextView info;
+            public final ImageView image;
+            public final Button play;
+
+            public ViewHolder(final View view) {
+                this.info = (TextView) view.findViewById(R.id.info_text);
+                this.image = (ImageView) view.findViewById(R.id.info_image);
+                this.play = (Button) view.findViewById(R.id.play_button);
+            }
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            final View view = super.newView(context, cursor, parent);
+            final ViewHolder holder = new ViewHolder(view);
+            view.setTag(holder);
+            holder.play.setOnClickListener(onClickListener);
+            return view;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            final Video video = mMapper.bind(cursor);
+            final ViewHolder holder = (ViewHolder) view.getTag();
+
+            holder.info.setText(video.getTitle());
+            mPicasso.load(video.getThumbUrl()).into(holder.image);
+
+            holder.play.setTag(video);
         }
     }
-
-
 
 }

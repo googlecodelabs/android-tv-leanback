@@ -51,7 +51,6 @@ public class RecommendationsService extends IntentService {
 
     private static final int DETAIL_THUMB_WIDTH = 274;
     private static final int DETAIL_THUMB_HEIGHT = 274;
-    private NotificationManager mNotificationManager;
 
 
     public RecommendationsService() {
@@ -67,7 +66,7 @@ public class RecommendationsService extends IntentService {
             VideoDataManager.VideoItemMapper mapper = new VideoDataManager.VideoItemMapper();
             mapper.bindColumns(cursor);
 
-            mNotificationManager = (NotificationManager) getApplicationContext()
+            NotificationManager mNotificationManager = (NotificationManager) getApplicationContext()
                     .getSystemService(Context.NOTIFICATION_SERVICE);
 
             Log.d(TAG, mNotificationManager == null ? "It's null" : mNotificationManager.toString());
@@ -85,7 +84,8 @@ public class RecommendationsService extends IntentService {
 
                 Bitmap image = Picasso.with(getApplicationContext())
                         .load(video.getThumbUrl())
-                        .resize(VideoDetailsFragment.dpToPx(DETAIL_THUMB_WIDTH, getApplicationContext()), VideoDetailsFragment.dpToPx(DETAIL_THUMB_WIDTH, getApplicationContext()))
+                        .resize(VideoDetailsFragment.dpToPx(DETAIL_THUMB_WIDTH, getApplicationContext()),
+                                VideoDetailsFragment.dpToPx(DETAIL_THUMB_HEIGHT, getApplicationContext()))
                         .get();
 
                 Notification notification = new NotificationCompat.BigPictureStyle(
@@ -110,11 +110,11 @@ public class RecommendationsService extends IntentService {
 
             cursor.close();
         } catch (RemoteException re) {
-
+            Log.e(TAG, "Cannot query VideoItems", re);
         } catch (IOException re) {
-
+            Log.e(TAG, "Cannot download thumbnail", re);
         } finally {
-            mNotificationManager = null;
+            client.release();
         }
     }
 

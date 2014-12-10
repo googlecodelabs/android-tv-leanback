@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:icon="@drawable/ic_launcher"
+    android:searchSuggestAuthority="com.android.example.leanback.search"
+    android:searchSuggestPath="search"
+    android:includeInGlobalSearch="true"
+    android:queryAfterZeroResults="true"
+    android:searchSettingsDescription="@string/app_name"
+    />
