@@ -45,5 +45,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:21.0.0"
 
     compile 'com.android.support:recyclerview-v7:+'
-    compile 'com.android.support:leanback-v17:+'
+    compile 'com.android.support:leanback-v17:21.+'
 }
