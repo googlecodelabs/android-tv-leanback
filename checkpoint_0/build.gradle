@@ -41,7 +41,7 @@ dependencies {
     compile 'com.android.support:support-v13:23.3.0'
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.squareup.picasso:picasso:2.3.4'
-    compile "com.android.support:appcompat-v7:23.3.0"
+    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:leanback-v17:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
 }
