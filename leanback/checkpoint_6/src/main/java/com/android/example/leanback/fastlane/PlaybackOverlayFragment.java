@@ -55,7 +55,6 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.util.Log;
 
-import com.android.example.leanback.R;
 import com.android.example.leanback.data.Video;
 import com.android.example.leanback.data.VideoDataManager;
 import com.android.example.leanback.data.VideoItemContract;
@@ -146,6 +145,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
     // Container Activity must implement this interface
     public interface OnPlayPauseClickedListener {
         public void onFragmentPlayPause(Video video, int position, Boolean playPause);
+
         public void onFragmentFfwRwd(Video video, int position);
     }
 
@@ -176,16 +176,16 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
                 super.onChanged();
                 mItems = new ArrayList<Video>();
                 for (int i = 0; i < rowContents.size(); i++) {
-                    mItems.add((Video)rowContents.get(i));
+                    mItems.add((Video) rowContents.get(i));
                 }
             }
         });
-        mManager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents );
+        mManager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents);
         mManager.startDataLoading();
 
         mHandler = new Handler();
 
-        mVideo = (Video)sActivity.getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
+        mVideo = (Video) sActivity.getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
         Log.d(TAG, "onCreate mVideo=" + mVideo);
 
         setBackgroundType(BACKGROUND_TYPE);
@@ -356,10 +356,10 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
     private void addOtherRows() {
         ObjectAdapter rowContents = new CursorObjectAdapter((new SinglePresenterSelector(new CardPresenter())));
-        VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents );
+        VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents);
         manager.startDataLoading();
 
-        HeaderItem headerItem = new HeaderItem(0, "You may also like", null);
+        HeaderItem headerItem = new HeaderItem(0, "You may also like");
         mRowsAdapter.add(new ListRow(headerItem, manager.getItemList()));
     }
 
@@ -399,7 +399,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
     private void prev() {
         int currentIndex = getCurrentIndex();
-        if (--currentIndex< 0) {
+        if (--currentIndex < 0) {
             currentIndex = mItems.size() - 1;
         }
         setVideoIndex(currentIndex);
@@ -420,7 +420,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         Log.d(TAG, "current time: " + mPlaybackControlsRow.getCurrentTime());
         updateRapidFfRwClickTracker();
         int currentTime = mPlaybackControlsRow.getCurrentTime() + getFfRwSpeed();
-        if( currentTime > (int) mDuration ) {
+        if (currentTime > (int) mDuration) {
             currentTime = (int) mDuration;
         }
         mCallback.onFragmentFfwRwd(mVideo, currentTime);
@@ -432,7 +432,7 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
         Log.d(TAG, "current time: " + mPlaybackControlsRow.getCurrentTime());
         updateRapidFfRwClickTracker();
         int currentTime = mPlaybackControlsRow.getCurrentTime() - getFfRwSpeed();
-        if( currentTime < 0 || currentTime > (int) mDuration ) {
+        if (currentTime < 0 || currentTime > (int) mDuration) {
             currentTime = 0;
         }
         mCallback.onFragmentFfwRwd(mVideo, currentTime);

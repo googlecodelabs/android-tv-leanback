@@ -175,7 +175,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(getResources().getColor(android.R.color.white));
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // If we're running on Honeycomb or newer, then we can use the Theme's
             // selectableItemBackground to ensure that the View has a pressed state

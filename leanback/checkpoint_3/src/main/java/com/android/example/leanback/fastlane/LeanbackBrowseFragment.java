@@ -16,7 +16,6 @@
 
 package com.android.example.leanback.fastlane;
 
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,18 +40,15 @@ import com.android.example.leanback.data.VideoItemContract;
 
 import java.io.Serializable;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LeanbackBrowseFragment extends BrowseFragment {
 
-    private ArrayObjectAdapter mRowsAdapter;
-
     private static final String[] HEADERS = new String[]{
-        "Featured", "Popular","Editor's choice"
+            "Featured", "Popular", "Editor's choice"
     };
-
+    private ArrayObjectAdapter mRowsAdapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -67,16 +63,14 @@ public class LeanbackBrowseFragment extends BrowseFragment {
         setBrandColor(getResources().getColor(R.color.primary));
         setBadgeDrawable(getResources().getDrawable(R.drawable.filmi));
 
-
         for (int position = 0; position < HEADERS.length; position++) {
             ObjectAdapter rowContents = new CursorObjectAdapter((new SinglePresenterSelector(new CardPresenter())));
-            VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents );
+            VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowContents);
             manager.startDataLoading();
 
-            HeaderItem headerItem = new HeaderItem(position, HEADERS[position], null);
+            HeaderItem headerItem = new HeaderItem(position, HEADERS[position]);
             mRowsAdapter.add(new ListRow(headerItem, manager.getItemList()));
         }
-
 
         setOnItemViewClickedListener(getDefaultItemViewClickedListener());
 
@@ -89,7 +83,7 @@ public class LeanbackBrowseFragment extends BrowseFragment {
             public void onItemClicked(Presenter.ViewHolder viewHolder, Object o, RowPresenter.ViewHolder viewHolder2, Row row) {
 
                 Intent intent = new Intent(getActivity(), VideoDetailsActivity.class);
-                intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)o);
+                intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable) o);
                 startActivity(intent);
 
             }

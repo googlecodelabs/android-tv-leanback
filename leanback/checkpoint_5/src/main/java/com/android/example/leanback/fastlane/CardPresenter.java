@@ -33,9 +33,6 @@ import com.android.example.leanback.data.Video;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-/**
- * Created by anirudhd on 11/2/14.
- */
 public class CardPresenter extends Presenter {
 
     private static int CARD_WIDTH = 200;
@@ -43,6 +40,31 @@ public class CardPresenter extends Presenter {
 
     private static Context mContext;
 
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup) {
+
+        Log.d("onCreateViewHolder", "creating viewholder");
+        mContext = viewGroup.getContext();
+        ImageCardView cardView = new ImageCardView(mContext);
+        cardView.setFocusable(true);
+        cardView.setFocusableInTouchMode(true);
+        ((TextView) cardView.findViewById(R.id.content_text)).setTextColor(Color.LTGRAY);
+        return new ViewHolder(cardView);
+    }
+
+    @Override
+    public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object o) {
+        Video video = (Video) o;
+        ((ViewHolder) viewHolder).mCardView.setTitleText(video.getTitle());
+        ((ViewHolder) viewHolder).mCardView.setContentText(video.getDescription());
+        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH * 2, CARD_HEIGHT * 2);
+        ((ViewHolder) viewHolder).updateCardViewImage(video.getThumbUrl());
+    }
+
+    @Override
+    public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
+
+    }
 
     static class ViewHolder extends Presenter.ViewHolder {
 
@@ -56,7 +78,6 @@ public class CardPresenter extends Presenter {
             mImageCardViewTarget = new PicassoImageCardViewTarget(mCardView);
             mDefaultCardImage = mContext.getResources().getDrawable(R.drawable.filmi);
         }
-
 
         public ImageCardView getCardView() {
             return mCardView;
@@ -72,32 +93,6 @@ public class CardPresenter extends Presenter {
                     .into(mImageCardViewTarget);
 
         }
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-
-        Log.d("onCreateViewHolder", "creating viewholder");
-        mContext = viewGroup.getContext();
-        ImageCardView cardView = new ImageCardView(mContext);
-        cardView.setFocusable(true);
-        cardView.setFocusableInTouchMode(true);
-        ((TextView)cardView.findViewById(R.id.content_text)).setTextColor(Color.LTGRAY);
-        return new ViewHolder(cardView);
-    }
-
-    @Override
-    public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object o) {
-        Video video = (Video) o;
-        ((ViewHolder) viewHolder).mCardView.setTitleText(video.getTitle());
-        ((ViewHolder) viewHolder).mCardView.setContentText(video.getDescription());
-      ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH * 2 , CARD_HEIGHT * 2);
-        ((ViewHolder) viewHolder).updateCardViewImage(video.getThumbUrl());
-    }
-
-    @Override
-    public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
-
     }
 
     public static class PicassoImageCardViewTarget implements Target {

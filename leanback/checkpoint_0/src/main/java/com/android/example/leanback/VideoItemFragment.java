@@ -58,7 +58,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-
     static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,
             VideoItemContract.VideoItemColumns.TITLE,
@@ -70,7 +69,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
             VideoItemContract.VideoItemColumns.TAGS,
             VideoItemContract.VideoItemColumns.CONTENT_URL,
     };
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -101,7 +99,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,7 +106,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
         mGridView.setAdapter(new MovieAdapter(getActivity()));
-
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -121,9 +117,7 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         getLoaderManager().initLoader(0, null, this);
         return rootView;
 
-
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -175,7 +169,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id, String url);
     }
-
 
     private static class MovieAdapter extends ResourceCursorAdapter {
 

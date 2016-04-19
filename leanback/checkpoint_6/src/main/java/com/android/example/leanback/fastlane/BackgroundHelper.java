@@ -28,9 +28,6 @@ import com.android.example.leanback.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-/**
- * Created by anirudhd on 11/3/14.
- */
 public class BackgroundHelper {
 
     private final Handler mHandler = new Handler();
@@ -49,7 +46,6 @@ public class BackgroundHelper {
     private DisplayMetrics mMetrics;
     private String mBackgroundURL;
 
-
     private Drawable mDefaultBackground;
     private Target mBackgroundTarget;
 
@@ -58,7 +54,6 @@ public class BackgroundHelper {
     }
 
     private long BACKGROUND_UPDATE_DELAY = 200L;
-
 
     public void prepareBackgroundManager() {
         mBackgroundManager = BackgroundManager.getInstance(mActivity);
@@ -103,15 +98,12 @@ public class BackgroundHelper {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
+            if (this == o) { return true; }
+            if (o == null || getClass() != o.getClass()) { return false; }
 
             PicassoBackgroundManagerTarget that = (PicassoBackgroundManagerTarget) o;
 
-            if (!mBackgroundManager.equals(that.mBackgroundManager))
-                return false;
+            if (!mBackgroundManager.equals(that.mBackgroundManager)) { return false; }
 
             return true;
         }
@@ -121,7 +113,6 @@ public class BackgroundHelper {
             return mBackgroundManager.hashCode();
         }
     }
-
 
     protected void setDefaultBackground(Drawable background) {
         mDefaultBackground = background;

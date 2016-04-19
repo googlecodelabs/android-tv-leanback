@@ -19,7 +19,6 @@ public class UniversalSearchContractTest extends AndroidTestCase {
         Log.i(getClass().getSimpleName(), msg);
     }
 
-
     private static final String DATABASE = "test.db";
 
     private void assertTables(final UniversalSearchContract.Table[] tables) {

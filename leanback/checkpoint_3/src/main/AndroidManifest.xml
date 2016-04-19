@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2014 Google Inc. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,31 +14,33 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.example.leanback" >
+<manifest package="com.android.example.leanback"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="14"
-        tools:overrideLibrary="android.support.v17.leanback, android.support.v7.recyclerview, android.support.v4"/>
+    <uses-sdk
+        android:minSdkVersion="14"
+        tools:overrideLibrary="android.support.v17.leanback, android.support.v7.recyclerview, android.support.v4" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-feature android:name="android.software.leanback"
+    <uses-feature
+        android:name="android.software.leanback"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false"/>
+        android:required="false" />
 
 
     <application
         android:allowBackup="true"
+        android:banner="@drawable/filmi_banner"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:banner="@drawable/filmi_banner"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,27 +52,24 @@
             android:name=".data.VideoContentProvider"
             android:authorities="com.android.example.leanback"
             android:enabled="true"
-            android:exported="true" >
-        </provider>
+            android:exported="true" />
 
         <activity
             android:name=".PlayerActivity"
-            android:screenOrientation="landscape"
-            android:label="@string/title_activity_player"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
-        </activity>
+            android:label="@string/title_activity_player"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <activity
             android:name=".VideoDetailsActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name" />
 
 
         <activity
             android:name=".fastlane.LeanbackActivity"
             android:label="@string/title_activity_player"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
@@ -81,9 +79,9 @@
 
         <activity
             android:name="com.android.example.leanback.fastlane.VideoDetailsActivity"
+            android:exported="true"
             android:label="@string/title_activity_player"
-            android:theme="@style/AppTheme"
-            android:exported="true">
+            android:theme="@style/AppTheme">
 
         </activity>
     </application>

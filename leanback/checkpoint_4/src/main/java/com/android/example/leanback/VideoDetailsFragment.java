@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
  */
 public class VideoDetailsFragment extends Fragment {
     private View mView;
+    private Video mVideo;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
@@ -65,8 +66,8 @@ public class VideoDetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Picasso.with(getActivity()).load(mVideo.getThumbUrl()).transform(BlurTransform.getInstance(this.getActivity())).fit().into((ImageView) mView.findViewById(R.id.image_view));
-        ((TextView)mView.findViewById(R.id.movie_info_title)).setText(mVideo.getTitle());
-        ((TextView)mView.findViewById(R.id.movie_info_text)).setText(mVideo.getDescription());
+        ((TextView) mView.findViewById(R.id.movie_info_title)).setText(mVideo.getTitle());
+        ((TextView) mView.findViewById(R.id.movie_info_text)).setText(mVideo.getDescription());
         mView.findViewById(R.id.movie_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +85,5 @@ public class VideoDetailsFragment extends Fragment {
     public void setmVideo(Video mVideo) {
         this.mVideo = mVideo;
     }
-
-    private Video mVideo;
 
 }

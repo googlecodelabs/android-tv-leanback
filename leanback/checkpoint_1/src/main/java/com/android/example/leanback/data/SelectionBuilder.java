@@ -16,24 +16,20 @@
 
 package com.android.example.leanback.data;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /*
  * Modifications:
  * -Imported from AOSP frameworks/base/core/java/com/android/internal/content
  * -Changed package name
  */
-
-
-        import android.content.ContentValues;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.text.TextUtils;
-
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.HashMap;
 
 /**
  * Helper for building selection clauses for {@link SQLiteDatabase}. Each

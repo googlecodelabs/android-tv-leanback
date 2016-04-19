@@ -81,7 +81,6 @@ public class VideoItemContract {
         }
     }
 
-
     private VideoItemContract() {
     }
 }

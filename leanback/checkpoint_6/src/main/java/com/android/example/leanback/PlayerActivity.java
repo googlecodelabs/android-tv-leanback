@@ -16,7 +16,6 @@
 
 package com.android.example.leanback;
 
-
 import android.app.Activity;
 import android.media.MediaCodec;
 import android.media.MediaCodec.CryptoException;
@@ -49,7 +48,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         ExoPlayer.Listener, MediaCodecVideoTrackRenderer.EventListener,
         PlaybackOverlayFragment.OnPlayPauseClickedListener {
 
-
     public static final int RENDERER_COUNT = 2;
 
     private static final String TAG = PlayerActivity.class.getSimpleName();
@@ -70,14 +68,13 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
     private PlayerControl playerControl;
     private int mPlayerPosition;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
         setContentView(R.layout.activity_player);
 
-        mVideo = (Video)getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
+        mVideo = (Video) getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
 
         // We will use the PlaybackOverlayFragment when running on TV.
         mIsOnTv = MyUtil.isRunningInTvMode(this);
@@ -171,7 +168,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         }
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -200,7 +196,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             autoPlay = false;
         }
     }
-
 
     private void onError(Exception e) {
         Log.e(TAG, "Playback failed", e);

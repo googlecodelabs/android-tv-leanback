@@ -28,13 +28,15 @@ import com.android.example.leanback.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-/**
- * Created by anirudhd on 11/3/14.
- */
 public class BackgroundHelper {
 
     private final Handler mHandler = new Handler();
-
+    private Activity mActivity;
+    private BackgroundManager mBackgroundManager;
+    private DisplayMetrics mMetrics;
+    private String mBackgroundURL;
+    private Drawable mDefaultBackground;
+    private Target mBackgroundTarget;
     private final Runnable mUpdateBackgroundAction = new Runnable() {
         @Override
         public void run() {
@@ -43,22 +45,11 @@ public class BackgroundHelper {
             }
         }
     };
-
-    private Activity mActivity;
-    private BackgroundManager mBackgroundManager;
-    private DisplayMetrics mMetrics;
-    private String mBackgroundURL;
-
-
-    private Drawable mDefaultBackground;
-    private Target mBackgroundTarget;
+    private long BACKGROUND_UPDATE_DELAY = 200L;
 
     public BackgroundHelper(Activity mActivity) {
         this.mActivity = mActivity;
     }
-
-    private long BACKGROUND_UPDATE_DELAY = 200L;
-
 
     public void prepareBackgroundManager() {
         mBackgroundManager = BackgroundManager.getInstance(mActivity);
@@ -78,50 +69,6 @@ public class BackgroundHelper {
         this.mBackgroundURL = backgroundUrl;
         scheduleUpdate();
     }
-
-    static class PicassoBackgroundManagerTarget implements Target {
-        BackgroundManager mBackgroundManager;
-
-        public PicassoBackgroundManagerTarget(BackgroundManager backgroundManager) {
-            this.mBackgroundManager = backgroundManager;
-        }
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
-            this.mBackgroundManager.setBitmap(bitmap);
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable drawable) {
-            this.mBackgroundManager.setDrawable(drawable);
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable drawable) {
-            // Do nothing, default_background manager has its own transitions
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-
-            PicassoBackgroundManagerTarget that = (PicassoBackgroundManagerTarget) o;
-
-            if (!mBackgroundManager.equals(that.mBackgroundManager))
-                return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            return mBackgroundManager.hashCode();
-        }
-    }
-
 
     protected void setDefaultBackground(Drawable background) {
         mDefaultBackground = background;
@@ -159,6 +106,46 @@ public class BackgroundHelper {
      */
     @Deprecated
     public void startBackgroundTimer() {
+    }
+
+    static class PicassoBackgroundManagerTarget implements Target {
+        BackgroundManager mBackgroundManager;
+
+        public PicassoBackgroundManagerTarget(BackgroundManager backgroundManager) {
+            this.mBackgroundManager = backgroundManager;
+        }
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+            this.mBackgroundManager.setBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable drawable) {
+            this.mBackgroundManager.setDrawable(drawable);
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable drawable) {
+            // Do nothing, default_background manager has its own transitions
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) { return true; }
+            if (o == null || getClass() != o.getClass()) { return false; }
+
+            PicassoBackgroundManagerTarget that = (PicassoBackgroundManagerTarget) o;
+
+            if (!mBackgroundManager.equals(that.mBackgroundManager)) { return false; }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return mBackgroundManager.hashCode();
+        }
     }
 
 }

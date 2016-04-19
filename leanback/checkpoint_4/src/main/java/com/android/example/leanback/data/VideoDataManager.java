@@ -27,25 +27,10 @@ import android.support.v17.leanback.database.CursorMapper;
 import android.support.v17.leanback.widget.CursorObjectAdapter;
 import android.support.v17.leanback.widget.ObjectAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by anirudhd on 10/25/14.
- *
- *
  */
 public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
-    protected Loader<Cursor> mDataLoader;
-    protected Context mContext;
-    protected LoaderManager mLoaderManager;
-    protected int LOADER_ID;
-    protected Uri mRowUri;
-
-
-    private final VideoItemMapper mMapper;
-
-
     public static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,
             VideoItemContract.VideoItemColumns.TITLE,
@@ -57,6 +42,12 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
             VideoItemContract.VideoItemColumns.TAGS,
             VideoItemContract.VideoItemColumns.CONTENT_URL,
     };
+    private final VideoItemMapper mMapper;
+    protected Loader<Cursor> mDataLoader;
+    protected Context mContext;
+    protected LoaderManager mLoaderManager;
+    protected int LOADER_ID;
+    protected Uri mRowUri;
     private ObjectAdapter mItemList;
 
     public VideoDataManager(Context mContext, LoaderManager mLoaderManager, Uri mRowUri, ObjectAdapter rowContents) {
@@ -66,7 +57,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
         mItemList = rowContents;
         LOADER_ID = Double.valueOf(Math.random() * Integer.MAX_VALUE).intValue();
         mMapper = new VideoItemMapper();
-        ((CursorObjectAdapter)mItemList).setMapper(mMapper);
+        ((CursorObjectAdapter) mItemList).setMapper(mMapper);
 
     }
 
@@ -102,7 +93,6 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static class VideoItemMapper extends CursorMapper {
 
-        private int[] mColumnMap;
         private static final int ID = 0;
         private static final int TITLE = 1;
         private static final int CATEGORY = 2;
@@ -112,6 +102,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
         private static final int THUMB_IMG_URL = 6;
         private static final int TAGS = 6;
         private static final int CONTENT_URL = 6;
+        private int[] mColumnMap;
 
         public void bindColumns(Cursor cursor) {
             mColumnMap = new int[9];

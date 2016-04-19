@@ -16,7 +16,6 @@
 
 package com.android.example.leanback;
 
-
 import android.app.Activity;
 import android.media.MediaCodec;
 import android.media.MediaCodec.CryptoException;
@@ -47,7 +46,6 @@ import com.google.android.exoplayer.util.PlayerControl;
 public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         ExoPlayer.Listener, MediaCodecVideoTrackRenderer.EventListener {
 
-
     public static final int RENDERER_COUNT = 2;
 
     private static final String TAG = "PlayerActivity";
@@ -63,13 +61,12 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
 
     private boolean autoPlay = true;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        mVideo = (Video)getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
+        mVideo = (Video) getIntent().getSerializableExtra(Video.INTENT_EXTRA_VIDEO);
 
         View root = findViewById(R.id.root);
         mediaController = new MediaController(this);
@@ -93,7 +90,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         videoRenderer = new MediaCodecVideoTrackRenderer(sampleSource, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
         TrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource);
 
-
         // Setup the player
         player = ExoPlayer.Factory.newInstance(RENDERER_COUNT, 1000, 5000);
         player.addListener(this);
@@ -102,7 +98,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         mediaController.setEnabled(true);
         player.prepare(videoRenderer, audioRenderer);
     }
-
 
     @Override
     public void onResume() {
@@ -125,7 +120,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
         videoRenderer = null;
         shutterView.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     protected void onStop() {
@@ -152,7 +146,6 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback,
             autoPlay = false;
         }
     }
-
 
     private void onError(Exception e) {
         Log.e(TAG, "Playback failed", e);

@@ -45,13 +45,11 @@ import java.io.IOException;
  */
 public class RecommendationsService extends IntentService {
 
+    public static final String EXTRA_BACKGROUND_IMAGE_URL = "background_image_url";
     private static final String TAG = "RecommendationsService";
     private static final int MAX_RECOMMENDATIONS = 3;
-    public static final String EXTRA_BACKGROUND_IMAGE_URL = "background_image_url";
-
     private static final int DETAIL_THUMB_WIDTH = 274;
     private static final int DETAIL_THUMB_HEIGHT = 274;
-
 
     public RecommendationsService() {
         super("RecommendationService");
@@ -73,9 +71,7 @@ public class RecommendationsService extends IntentService {
 
             int count = 1;
 
-
             while (cursor.moveToNext() && count <= MAX_RECOMMENDATIONS) {
-
 
                 Video video = mapper.bind(cursor);
                 PendingIntent pendingIntent = buildPendingIntent(video);

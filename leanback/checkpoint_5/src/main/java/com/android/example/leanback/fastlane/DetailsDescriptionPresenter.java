@@ -16,7 +16,6 @@
 
 package com.android.example.leanback.fastlane;
 
-
 import android.content.Context;
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
 import android.util.Log;

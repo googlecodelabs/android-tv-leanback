@@ -32,7 +32,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private List<Video> mDataset;
     private Context mContext;
@@ -43,6 +42,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView mCardView;
+
         public ViewHolder(CardView v) {
             super(v);
             mCardView = v;
@@ -58,7 +58,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+                                         int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.video_card, parent, false);
@@ -75,7 +75,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         Video video = mDataset.get(position);
 
         Log.d("VideoAdapter", video.getThumbUrl());
-        ((TextView)holder.mCardView.findViewById(R.id.info_text)).setText(video.getTitle());
+        ((TextView) holder.mCardView.findViewById(R.id.info_text)).setText(video.getTitle());
         ImageView imageView = (ImageView) holder.mCardView.findViewById(R.id.info_image);
         Picasso.with(holder.mCardView.getContext()).load(video.getThumbUrl()).into(imageView);
         holder.mCardView.findViewById(R.id.play_button).setOnClickListener(new View.OnClickListener() {
@@ -83,7 +83,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(holder.mCardView.getContext(), PlayerActivity.class);
                 holder.mCardView.getContext().startActivity(intent);
-            }});
+            }
+        });
 
     }
 

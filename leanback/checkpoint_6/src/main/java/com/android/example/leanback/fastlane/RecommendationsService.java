@@ -40,9 +40,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
-/**
- * Created by anirudhd on 11/2/14.
- */
 public class RecommendationsService extends IntentService {
 
     private static final String TAG = "RecommendationsService";
@@ -51,7 +48,6 @@ public class RecommendationsService extends IntentService {
 
     private static final int DETAIL_THUMB_WIDTH = 274;
     private static final int DETAIL_THUMB_HEIGHT = 274;
-
 
     public RecommendationsService() {
         super("RecommendationService");
@@ -73,9 +69,7 @@ public class RecommendationsService extends IntentService {
 
             int count = 1;
 
-
             while (cursor.moveToNext() && count <= MAX_RECOMMENDATIONS) {
-
 
                 Video video = mapper.bind(cursor);
                 PendingIntent pendingIntent = buildPendingIntent(video);
@@ -96,7 +90,7 @@ public class RecommendationsService extends IntentService {
                                 .setLocalOnly(true)
                                 .setOngoing(true)
                                 .setColor(getApplicationContext().getResources().getColor(R.color.primary))
-                                        // .setCategory(Notification.CATEGORY_RECOMMENDATION)
+                                // .setCategory(Notification.CATEGORY_RECOMMENDATION)
                                 .setCategory("recommendation")
                                 .setLargeIcon(image)
                                 .setSmallIcon(R.drawable.ic_stat_f)

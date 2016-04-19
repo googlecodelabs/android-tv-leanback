@@ -28,9 +28,6 @@ import android.widget.TextView;
 import com.android.example.leanback.data.Video;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by anirudhd on 11/5/14.
- */
 public class VideoDetailsFragment extends Fragment {
     private View mView;
 
@@ -65,8 +62,8 @@ public class VideoDetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Picasso.with(getActivity()).load(mVideo.getThumbUrl()).transform(BlurTransform.getInstance(this.getActivity())).fit().into((ImageView) mView.findViewById(R.id.image_view));
-        ((TextView)mView.findViewById(R.id.movie_info_title)).setText(mVideo.getTitle());
-        ((TextView)mView.findViewById(R.id.movie_info_text)).setText(mVideo.getDescription());
+        ((TextView) mView.findViewById(R.id.movie_info_title)).setText(mVideo.getTitle());
+        ((TextView) mView.findViewById(R.id.movie_info_text)).setText(mVideo.getDescription());
         mView.findViewById(R.id.movie_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

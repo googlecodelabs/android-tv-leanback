@@ -25,7 +25,6 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
-
 public class MainActivity extends Activity
         implements VideoItemFragment.OnFragmentInteractionListener {
 
@@ -39,11 +38,11 @@ public class MainActivity extends Activity
 
         //setup ViewPager
         mAdapter = new MoviePagerAdapter(getFragmentManager());
-        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
         // Sliding tabs for viewpager
-        SlidingTabLayout slidingTab = (SlidingTabLayout)findViewById(R.id.sliding_tabs);
+        SlidingTabLayout slidingTab = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTab.setViewPager(mPager);
         // slidingTab.setSelectedIndicatorColors(new int[]{getResources().getColor(android.R.color.white)});
         slidingTab.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -54,13 +53,11 @@ public class MainActivity extends Activity
 
             @Override
             public int getDividerColor(int position) {
-                return Color.argb(0,0,0,0);
+                return Color.argb(0, 0, 0, 0);
             }
         });
 
-
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,9 +76,8 @@ public class MainActivity extends Activity
 
     }
 
-
     /**
-     *  Simple implementation for {@link #FragmentPagerAdapter}
+     * Simple implementation for {@link #FragmentPagerAdapter}
      */
     public static class MoviePagerAdapter extends FragmentPagerAdapter {
         private static final int NUM_ITEMS = 3;
@@ -102,11 +98,15 @@ public class MainActivity extends Activity
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch(position) {
-                case 0: return "Featured";
-                case 1: return "Popular";
-                case 2: return "Editor's Choice";
-                default: return "This can't happen";
+            switch (position) {
+                case 0:
+                    return "Featured";
+                case 1:
+                    return "Popular";
+                case 2:
+                    return "Editor's Choice";
+                default:
+                    return "This can't happen";
 
             }
         }

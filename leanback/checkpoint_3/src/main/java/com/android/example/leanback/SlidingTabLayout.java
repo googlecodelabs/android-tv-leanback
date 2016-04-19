@@ -47,28 +47,10 @@ import android.widget.TextView;
  */
 public class SlidingTabLayout extends HorizontalScrollView {
 
-    /**
-     * Allows complete control over the colors drawn in the tab layout. Set with
-     * {@link #setCustomTabColorizer(com.android.example.leanback.SlidingTabLayout.TabColorizer)}.
-     */
-    public interface TabColorizer {
-
-        /**
-         * @return return the color of the indicator used when {@code position} is selected.
-         */
-        int getIndicatorColor(int position);
-
-        /**
-         * @return return the color of the divider drawn to the right of {@code position}.
-         */
-        int getDividerColor(int position);
-
-    }
-
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
-
+    private final SlidingTabStrip mTabStrip;
     private int mTitleOffset;
 
     private int mTabViewLayoutId;
@@ -76,8 +58,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
-
-    private final SlidingTabStrip mTabStrip;
 
     public SlidingTabLayout(Context context) {
         this(context, null);
@@ -175,7 +155,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setTextColor(getResources().getColor(android.R.color.white));
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // If we're running on Honeycomb or newer, then we can use the Theme's
             // selectableItemBackground to ensure that the View has a pressed state
@@ -252,6 +231,24 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
             scrollTo(targetScrollX, 0);
         }
+    }
+
+    /**
+     * Allows complete control over the colors drawn in the tab layout. Set with
+     * {@link #setCustomTabColorizer(com.android.example.leanback.SlidingTabLayout.TabColorizer)}.
+     */
+    public interface TabColorizer {
+
+        /**
+         * @return return the color of the indicator used when {@code position} is selected.
+         */
+        int getIndicatorColor(int position);
+
+        /**
+         * @return return the color of the divider drawn to the right of {@code position}.
+         */
+        int getDividerColor(int position);
+
     }
 
     private class InternalViewPagerListener implements ViewPager.OnPageChangeListener {

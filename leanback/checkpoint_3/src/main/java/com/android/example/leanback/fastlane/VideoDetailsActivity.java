@@ -26,7 +26,6 @@ import com.android.example.leanback.R;
  */
 public class VideoDetailsActivity extends Activity {
 
-
     /**
      * Called when the activity is first created.
      */

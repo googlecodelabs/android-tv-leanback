@@ -21,11 +21,7 @@ import android.os.Bundle;
 
 import com.android.example.leanback.R;
 
-/**
- * Created by anirudhd on 11/2/14.
- */
 public class VideoDetailsActivity extends Activity {
-
 
     /**
      * Called when the activity is first created.

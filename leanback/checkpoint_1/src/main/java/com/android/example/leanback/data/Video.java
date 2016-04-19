@@ -18,11 +18,7 @@ package com.android.example.leanback.data;
 
 import java.io.Serializable;
 
-/**
- * Created by anirudhd on 10/25/14.
- */
 public class Video implements Serializable {
-
 
     public static final String INTENT_EXTRA_VIDEO = "INTENT_EXTRA_VIDEO";
     private long id;

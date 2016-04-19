@@ -12,7 +12,7 @@ public class DdlTest extends AndroidTestCase {
                 .from(UniversalSearchContract.Video.TABLE_NAME)
                 .join(UniversalSearchContract.VideoFts.TABLE_NAME,
                         UniversalSearchContract.Video.TABLE_NAME + "." + UniversalSearchContract.Video.ID
-                        + "=" + UniversalSearchContract.VideoFts.TABLE_NAME + "." + UniversalSearchContract.VideoFts.ID)
+                                + "=" + UniversalSearchContract.VideoFts.TABLE_NAME + "." + UniversalSearchContract.VideoFts.ID)
                 .build();
         System.out.println(sql);
         assertEquals(required.toLowerCase(), sql.toLowerCase());

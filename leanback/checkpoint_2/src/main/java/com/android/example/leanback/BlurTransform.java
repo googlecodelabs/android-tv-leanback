@@ -28,7 +28,6 @@ import com.squareup.picasso.Transformation;
 public class BlurTransform implements Transformation {
 
     RenderScript rs;
-
     static BlurTransform blurTransform;
 
     protected BlurTransform() {

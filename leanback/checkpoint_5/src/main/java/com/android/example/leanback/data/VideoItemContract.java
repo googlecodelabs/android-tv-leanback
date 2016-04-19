@@ -22,6 +22,9 @@ public class VideoItemContract {
     public static final String CONTENT_AUTHORITY = "com.android.example.leanback";
     public static final Uri BASE_URI = Uri.parse("content://com.android.example.leanback");
 
+    private VideoItemContract() {
+    }
+
     public interface VideoItemColumns {
         /**
          * Type: INTEGER PRIMARY KEY AUTOINCREMENT
@@ -79,9 +82,5 @@ public class VideoItemContract {
         public static Uri buildItemUri(long _id) {
             return BASE_URI.buildUpon().appendPath("videoitem").appendPath(Long.toString(_id)).build();
         }
-    }
-
-
-    private VideoItemContract() {
     }
 }

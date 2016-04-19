@@ -46,20 +46,21 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.Serializable;
 
-/**
- *
- */
 public class VideoDetailsFragment extends DetailsFragment {
 
-    private Video selectedVideo;
     private static final int DETAIL_THUMB_WIDTH = 274;
     private static final int DETAIL_THUMB_HEIGHT = 274;
-
     private static final int ACTION_PLAY = 1;
     private static final int ACTION_WATCH_LATER = 2;
-
+    private Video selectedVideo;
     private DetailRowBuilderTask mRowBuilderTask;
     private BackgroundHelper bgHelper;
+
+    // Utility method for converting dp to pixels
+    public static int dpToPx(int dp, Context ctx) {
+        float density = ctx.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,10 +118,9 @@ public class VideoDetailsFragment extends DetailsFragment {
                 public void onActionClicked(Action action) {
                     if (action.getId() == ACTION_PLAY) {
                         Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                        intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable)selectedVideo);
+                        intent.putExtra(Video.INTENT_EXTRA_VIDEO, (Serializable) selectedVideo);
                         startActivity(intent);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getActivity(), action.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -140,23 +140,15 @@ public class VideoDetailsFragment extends DetailsFragment {
             };
 
             CursorObjectAdapter rowAdapter = new CursorObjectAdapter(new SinglePresenterSelector(new CardPresenter()));
-            VideoDataManager manager  = new VideoDataManager(getActivity(),getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(),rowAdapter);
+            VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowAdapter);
             manager.startDataLoading();
-            HeaderItem header = new HeaderItem(0, subcategories[0], null);
+            HeaderItem header = new HeaderItem(0, subcategories[0]);
             adapter.add(new ListRow(header, rowAdapter));
             setAdapter(adapter);
             // <END>
 
-
-
         }
 
-    }
-
-    // Utility method for converting dp to pixels
-    public static int dpToPx(int dp, Context ctx) {
-        float density = ctx.getResources().getDisplayMetrics().density;
-        return Math.round((float) dp * density);
     }
 
 }

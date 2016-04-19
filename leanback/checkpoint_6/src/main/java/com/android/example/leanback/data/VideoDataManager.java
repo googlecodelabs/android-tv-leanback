@@ -27,14 +27,6 @@ import android.support.v17.leanback.database.CursorMapper;
 import android.support.v17.leanback.widget.CursorObjectAdapter;
 import android.support.v17.leanback.widget.ObjectAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by anirudhd on 10/25/14.
- *
- *
- */
 public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
     protected Loader<Cursor> mDataLoader;
     protected Context mContext;
@@ -42,9 +34,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
     protected int LOADER_ID;
     protected Uri mRowUri;
 
-
     private final VideoItemMapper mMapper;
-
 
     public static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,
@@ -66,7 +56,7 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
         mItemList = rowContents;
         LOADER_ID = Double.valueOf(Math.random() * Integer.MAX_VALUE).intValue();
         mMapper = new VideoItemMapper();
-        ((CursorObjectAdapter)mItemList).setMapper(mMapper);
+        ((CursorObjectAdapter) mItemList).setMapper(mMapper);
 
     }
 

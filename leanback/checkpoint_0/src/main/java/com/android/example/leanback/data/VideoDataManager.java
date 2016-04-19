@@ -27,11 +27,6 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by anirudhd on 10/25/14.
- *
- *
- */
 public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
     protected Loader<Cursor> mDataLoader;
     protected Context mContext;
@@ -49,7 +44,6 @@ public class VideoDataManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
     List<Video> videos;
     private final VideoItemMapper mMapper;
-
 
     public static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,

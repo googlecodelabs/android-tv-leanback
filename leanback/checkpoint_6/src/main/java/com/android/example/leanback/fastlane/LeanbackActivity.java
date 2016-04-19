@@ -21,9 +21,6 @@ import android.os.Bundle;
 
 import com.android.example.leanback.R;
 
-/**
- * Created by anirudhd on 11/2/14.
- */
 public class LeanbackActivity extends Activity {
 
     @Override

@@ -58,7 +58,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
-
     static String[] PROJECTION = {
             VideoItemContract.VideoItemColumns._ID,
             VideoItemContract.VideoItemColumns.TITLE,
@@ -71,10 +70,16 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
             VideoItemContract.VideoItemColumns.CONTENT_URL,
     };
 
-
     private OnFragmentInteractionListener mListener;
 
     private GridView mGridView;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public VideoItemFragment() {
+    }
 
     // TODO: Rename and change types of parameters
     public static VideoItemFragment newInstance(String param1) {
@@ -86,13 +91,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public VideoItemFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +99,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,7 +106,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         mGridView = (GridView) rootView.findViewById(R.id.gridview);
 
         mGridView.setAdapter(new MovieAdapter(getActivity()));
-
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -121,9 +117,7 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         getLoaderManager().initLoader(0, null, this);
         return rootView;
 
-
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -176,11 +170,7 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         public void onFragmentInteraction(String id, String url);
     }
 
-
     private static class MovieAdapter extends ResourceCursorAdapter {
-
-        private final VideoDataManager.VideoItemMapper mMapper = new VideoDataManager.VideoItemMapper();
-        private final Picasso mPicasso;
 
         private final static View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -191,6 +181,8 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
                 );
             }
         };
+        private final VideoDataManager.VideoItemMapper mMapper = new VideoDataManager.VideoItemMapper();
+        private final Picasso mPicasso;
 
         public MovieAdapter(Context context) {
             super(context, R.layout.video_card, null, 0);
@@ -214,18 +206,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
             }
         }
 
-        public static class ViewHolder {
-            public final TextView info;
-            public final ImageView image;
-            public final Button play;
-
-            public ViewHolder(final View view) {
-                this.info = (TextView) view.findViewById(R.id.info_text);
-                this.image = (ImageView) view.findViewById(R.id.info_image);
-                this.play = (Button) view.findViewById(R.id.play_button);
-            }
-        }
-
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             final View view = super.newView(context, cursor, parent);
@@ -244,6 +224,18 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
             mPicasso.load(video.getThumbUrl()).into(holder.image);
 
             holder.play.setTag(video);
+        }
+
+        public static class ViewHolder {
+            public final TextView info;
+            public final ImageView image;
+            public final Button play;
+
+            public ViewHolder(final View view) {
+                this.info = (TextView) view.findViewById(R.id.info_text);
+                this.image = (ImageView) view.findViewById(R.id.info_image);
+                this.play = (Button) view.findViewById(R.id.play_button);
+            }
         }
     }
 
