@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2014 Google Inc. All rights reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
+
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+
+    </style>
+
+
+    <style name="AppToolbarStyle" parent="@android:style/Widget.Toolbar">
+        <item name="android:titleTextAppearance">@style/AppActionBarTitleText</item>
+        <item name="android:elevation">5dp</item>
+    </style>
+
+    <!-- Text in the action bar at the top of the screen -->
+    <style name="AppActionBarTitleText"
+        parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="WatchDetailsPlayButton">
+        <item name="android:src">@drawable/fab</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:elevation">6dp</item>
+    </style>
+   </resources>

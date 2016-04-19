@@ -1,0 +1,57 @@
+<!--
+  ~ Copyright 2014 Google Inc. All rights reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--&lt;!&ndash; Here we setting appcompat’s actionBarStyle &ndash;&gt;-->
+        <!--<item name="actionBarStyle">@style/</item>-->
+
+        <!-- ...and here we setting appcompat’s color theming attrs -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+
+        <!-- The rest of your attributes -->
+    </style>
+    <style name="PagerTitle">
+        <item name="android:background">#00FFFFFF</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+
+    <style name="GridStyle">
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:verticalSpacing">10dp</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scrollX">0dp</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="WatchDetailsPlayButton">
+        <item name="android:src">@drawable/fab</item>
+    </style>
+</resources>
