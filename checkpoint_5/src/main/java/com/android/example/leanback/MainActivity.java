@@ -22,6 +22,7 @@ import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
@@ -48,7 +49,7 @@ public class MainActivity extends Activity
         slidingTab.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.accent);
+                return ContextCompat.getColor(MainActivity.this, R.color.accent);
             }
 
             @Override
