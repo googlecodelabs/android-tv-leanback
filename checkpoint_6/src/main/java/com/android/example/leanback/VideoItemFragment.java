@@ -96,7 +96,6 @@ public class VideoItemFragment extends Fragment implements LoaderManager.LoaderC
         super.onCreate(savedInstanceState);
 //        manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri());
 //        manager.startDataLoading();
-
     }
 
     @Override

@@ -144,9 +144,9 @@ public class PlaybackOverlayFragment extends android.support.v17.leanback.app.Pl
 
     // Container Activity must implement this interface
     public interface OnPlayPauseClickedListener {
-        public void onFragmentPlayPause(Video video, int position, Boolean playPause);
+        void onFragmentPlayPause(Video video, int position, Boolean playPause);
 
-        public void onFragmentFfwRwd(Video video, int position);
+        void onFragmentFfwRwd(Video video, int position);
     }
 
     @Override

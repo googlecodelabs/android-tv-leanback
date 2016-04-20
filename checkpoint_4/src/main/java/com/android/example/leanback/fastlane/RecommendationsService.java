@@ -29,6 +29,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.android.example.leanback.PlayerActivity;
@@ -91,7 +92,7 @@ public class RecommendationsService extends IntentService {
                                 .setPriority(4)
                                 .setLocalOnly(true)
                                 .setOngoing(true)
-                                .setColor(getApplicationContext().getResources().getColor(R.color.primary))
+                                .setColor(ContextCompat.getColor(getApplicationContext(), R.color.primary))
                                 .setCategory(Notification.CATEGORY_RECOMMENDATION)
                                 .setLargeIcon(image)
                                 .setSmallIcon(R.drawable.ic_stat_f)
@@ -124,7 +125,6 @@ public class RecommendationsService extends IntentService {
         // PendingIntent
         detailsIntent.setAction(Long.toString(video.getId()));
 
-        PendingIntent intent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        return intent;
+        return stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

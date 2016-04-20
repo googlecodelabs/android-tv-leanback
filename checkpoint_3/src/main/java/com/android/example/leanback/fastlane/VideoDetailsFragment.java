@@ -27,12 +27,14 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
 import android.support.v17.leanback.widget.CursorObjectAdapter;
 import android.support.v17.leanback.widget.DetailsOverviewRow;
-import android.support.v17.leanback.widget.DetailsOverviewRowPresenter;
+import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
+import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -92,22 +94,25 @@ public class VideoDetailsFragment extends DetailsFragment {
             } catch (IOException e) {
                 Log.e("VideoDetailsFragment", "Cannot load thumbnail for " + videos[0].getId(), e);
             }
-            row.addAction(new Action(ACTION_PLAY, getResources().getString(
-                    R.string.action_play)));
-            row.addAction(new Action(ACTION_WATCH_LATER, getResources().getString(R.string.action_watch_later)));
-            return row;
 
+            SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
+            adapter.set(ACTION_PLAY, new Action(ACTION_PLAY, getResources().getString(
+                    R.string.action_play)));
+            adapter.set(ACTION_WATCH_LATER, new Action(ACTION_WATCH_LATER, getResources().getString(R.string.action_watch_later)));
+            row.setActionsAdapter(adapter);
+
+            return row;
         }
 
         @Override
         protected void onPostExecute(DetailsOverviewRow detailRow) {
             ClassPresenterSelector ps = new ClassPresenterSelector();
-            DetailsOverviewRowPresenter dorPresenter =
-                    new DetailsOverviewRowPresenter(new DetailsDescriptionPresenter(getActivity()));
-            // set detail background and style
-            dorPresenter.setBackgroundColor(getResources().getColor(R.color.primary));
-            dorPresenter.setStyleLarge(true);
-            dorPresenter.setOnActionClickedListener(new OnActionClickedListener() {
+
+            FullWidthDetailsOverviewRowPresenter detailsPresenter = new FullWidthDetailsOverviewRowPresenter(new DetailsDescriptionPresenter(getContext()));
+            detailsPresenter.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.primary));
+            detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_FULL);
+
+            detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
                 @Override
                 public void onActionClicked(Action action) {
                     if (action.getId() == ACTION_PLAY) {
@@ -120,9 +125,8 @@ public class VideoDetailsFragment extends DetailsFragment {
                 }
             });
 
-            ps.addClassPresenter(DetailsOverviewRow.class, dorPresenter);
-            ps.addClassPresenter(ListRow.class,
-                    new ListRowPresenter());
+            ps.addClassPresenter(DetailsOverviewRow.class, detailsPresenter);
+            ps.addClassPresenter(ListRow.class, new ListRowPresenter());
 
             /** bonus code for adding related items to details fragment **/
             // <START>
@@ -136,7 +140,7 @@ public class VideoDetailsFragment extends DetailsFragment {
             CursorObjectAdapter rowAdapter = new CursorObjectAdapter(new SinglePresenterSelector(new CardPresenter()));
             VideoDataManager manager = new VideoDataManager(getActivity(), getLoaderManager(), VideoItemContract.VideoItem.buildDirUri(), rowAdapter);
             manager.startDataLoading();
-            HeaderItem header = new HeaderItem(0, subcategories[0], null);
+            HeaderItem header = new HeaderItem(0, subcategories[0]);
             adapter.add(new ListRow(header, rowAdapter));
             setAdapter(adapter);
             // <END>

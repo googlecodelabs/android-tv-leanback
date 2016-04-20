@@ -42,10 +42,9 @@ public class DetailsDescriptionPresenter extends AbstractDetailsDescriptionPrese
         Video video = (Video) item;
 
         if (video != null) {
-            Log.d("DetailsDescriptionPresenter", String.format("%s, %s, %s", video.getTitle(), video.getThumbUrl(), video.getDescription()));
+            Log.d("Presenter", String.format("%s, %s, %s", video.getTitle(), video.getThumbUrl(), video.getDescription()));
             viewHolder.getTitle().setText(video.getTitle());
-            viewHolder.getSubtitle().setText(mContext.getString(R.string.rating) + ": "
-                    + String.valueOf(video.getRating()));
+            viewHolder.getSubtitle().setText(String.format(mContext.getString(R.string.rating), video.getRating()));
             viewHolder.getBody().setText(video.getDescription());
         }
     }

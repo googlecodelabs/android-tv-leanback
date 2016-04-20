@@ -34,7 +34,6 @@ public class VideoDetailsActivity extends Activity {
         Video video = (Video) getIntent().getExtras().get(Video.INTENT_EXTRA_VIDEO);
         VideoDetailsFragment frag = (VideoDetailsFragment) getFragmentManager().findFragmentById(R.id.details_frag);
         frag.setmVideo(video);
-
     }
 
 }

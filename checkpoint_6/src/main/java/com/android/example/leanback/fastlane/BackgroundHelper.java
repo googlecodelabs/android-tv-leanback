@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v17.leanback.app.BackgroundManager;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 
 import com.android.example.leanback.BlurTransform;
@@ -59,7 +60,7 @@ public class BackgroundHelper {
         mBackgroundManager = BackgroundManager.getInstance(mActivity);
         mBackgroundManager.attach(mActivity.getWindow());
         mBackgroundTarget = new PicassoBackgroundManagerTarget(mBackgroundManager);
-        mDefaultBackground = mActivity.getResources().getDrawable(R.drawable.default_background);
+        mDefaultBackground = ContextCompat.getDrawable(mActivity, R.drawable.default_background);
         mMetrics = new DisplayMetrics();
         mActivity.getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
@@ -103,9 +104,7 @@ public class BackgroundHelper {
 
             PicassoBackgroundManagerTarget that = (PicassoBackgroundManagerTarget) o;
 
-            if (!mBackgroundManager.equals(that.mBackgroundManager)) { return false; }
-
-            return true;
+            return mBackgroundManager.equals(that.mBackgroundManager);
         }
 
         @Override
@@ -119,7 +118,7 @@ public class BackgroundHelper {
     }
 
     protected void setDefaultBackground(int resourceId) {
-        mDefaultBackground = mActivity.getResources().getDrawable(resourceId);
+        mDefaultBackground = ContextCompat.getDrawable(mActivity, resourceId);
     }
 
     protected void updateBackground(String url) {
