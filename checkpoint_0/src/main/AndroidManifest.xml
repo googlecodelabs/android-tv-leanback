@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright 2014 Google Inc. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +25,6 @@
         -->
 
     <uses-sdk
-        android:minSdkVersion="14"
         tools:overrideLibrary="android.support.v17.leanback, android.support.v7.recyclerview, android.support.v4" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -61,7 +61,6 @@
             android:label="@string/title_activity_player"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            >
         </activity>
         <activity
             android:name="com.android.example.leanback.VideoDetailsActivity"

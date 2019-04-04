@@ -19,7 +19,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
-        android:minSdkVersion="14"
         android:targetSdkVersion="21"
         tools:overrideLibrary="android.support.v17.leanback, android.support.v7.recyclerview, android.support.v4" />
 
